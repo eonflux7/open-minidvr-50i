@@ -32,7 +32,8 @@
   .num { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--accent-text);
          display: grid; place-items: center; font-weight: 700; font-size: .9rem; }
   .step > div { min-width: 0; flex: 1; }
-  .drop { border: 2px dashed var(--line); border-radius: 10px; padding: 22px; text-align: center; cursor: pointer;
+  .drop { display: block; margin-top: 4px; border: 2px dashed var(--line); border-radius: 10px; padding: 22px;
+          text-align: center; cursor: pointer;
           color: var(--muted); }
   .drop.over { border-color: var(--accent); color: var(--text); }
   input[type=file] { display: none; }
