@@ -13,7 +13,7 @@ board). It was reverse-engineered to record a Sony VX2100E (PAL) as well as this
 | | Stock firmware | With this project |
 |---|---|---|
 | Video | one field per frame (288 lines) upscaled to 720×480 or 1280×720, 25 fps | **every field** (704×288 at 50 fields/s), woven into real **720×576 50i** on the PC, no scaling |
-| Picture | off-centre, tearing band at the bottom when moving | centred capture window, finest JPEG quality from the start (no tearing band) |
+| Picture | 684 px window, cropped more on the left than the right, stretched to 720 wide | all 704 active pixels at 1:1, centred, finest JPEG quality from the start |
 | Audio | 8 kHz mono, a click once per 32 KB block | **31 kHz** mono (real sound up to about 10 kHz), clicks removed by the converter |
 
 > [!WARNING]
@@ -153,8 +153,9 @@ If you try it, please open an issue with a short raw `.AVI` and what you saw on 
   - a 31 kHz audio header
 - **50i:** the capture front end normally drops every second field. The hook's field gate keeps both, and the
   encoder gets each 288-line field as its own frame.
-- **Tearing fix:** the band came from the JPEG encoder overtaking the capture DMA while rate control started coarse.
-  Starting at the finest level (`56E6 = 9`) removes it.
+- **Tearing fix:** the higher bitrate made a band of stale picture appear at the bottom (stock doesn't show it). The
+  JPEG encoder overtook the capture DMA while rate control started coarse. Starting at the finest level (`56E6 = 9`)
+  removes it.
 - **Audio:**
   - The record path hard-codes 8 kHz, and its byte-rate registers turned out to be bookkeeping only.
   - The real sample clock is the divider pair **77B2/77B3**: rate = 496000 / (77B2 + 77B3). Stock is 0x1F + 0x1F,

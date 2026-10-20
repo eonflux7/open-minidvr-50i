@@ -108,7 +108,9 @@ This turned every experiment into "copy a 100-byte file to the card" instead of 
   inside the 65–73 s stutter.
 
 ### Tearing band (fixed)
-- A band of stale picture at the bottom while panning. Each capture buffer gets field N, and the JPEG encoder reads it
+- A band of stale picture at the bottom while panning, on our higher-bitrate builds only: stock recordings measure
+  no band (`tools/bandcheck.py` on PICT0002/0034/0035 scaled to 288 lines: −2% to +2%).
+  Each capture buffer gets field N, and the JPEG encoder reads it
   strip by strip. At coarse quality the encoder is faster than the capture DMA and overtakes it near the bottom.
 - Stock rate control starts coarse (level 2 → 9 over about 4 s), so the band was worst at the start.
   `rec write 56E6 09` (finest from the start) removed it: the bottom strips are current in about 97% of frames
