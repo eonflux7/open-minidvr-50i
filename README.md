@@ -12,7 +12,7 @@ board). It was reverse-engineered to record a Sony VX2100E (PAL) as well as this
 
 | | Stock firmware | With this project |
 |---|---|---|
-| Video | one field per frame (288 lines) upscaled to 720×480 or 1280×720, 25 fps | **every field** (704×288 at 50 fields/s), woven into real **720×576 50i** on the PC, no scaling |
+| Video | only every second field, upscaled to 720×480 or 1280×720 | **every field**, recorded at 704 pixels wide and woven into real **interlaced video** on the PC (720×576 PAL, 720×480 NTSC), no scaling |
 | Picture | 684 px window, cropped more on the left than the right, stretched to 720 wide | all 704 active pixels at 1:1, centred, finest JPEG quality from the start |
 | Audio | 8 kHz mono, a click once per 32 KB block | **31 kHz** mono (real sound up to about 10 kHz), clicks removed by the converter |
 
@@ -66,10 +66,12 @@ numpy and ffmpeg with winget.
 
 Each recording becomes two files next to it:
 
-| File | What it's for |
-|---|---|
-| `PICT0001_576i.mp4` | 720×576 interlaced (25i): TVs, DVD/Blu-ray authoring, video editors |
-| `PICT0001_576p50.mp4` | 720×576 at 50p: smooth on computers and phones, and for uploading |
+| PAL | NTSC | What it's for |
+|---|---|---|
+| `PICT0001_576i.mp4` | `PICT0001_480i.mp4` | interlaced, like the camera: TVs, DVD/Blu-ray authoring, video editors |
+| `PICT0001_576p50.mp4` | `PICT0001_480p60.mp4` | progressive, one frame per field: smooth on computers and phones, and for uploading |
+
+It recognises PAL and NTSC recordings by itself.
 
 If something is wrong (a recording made without ADJUST.BIN, an unfinished copy, a missing program), it says so in plain
 words and carries on with the other files.
@@ -77,13 +79,10 @@ words and carries on with the other files.
 With a terminal you can also choose the output yourself:
 
 ```
-python tools/weave.py PICT0001.AVI PICT0001.mp4           # 720x576 interlaced (25i) only
-python tools/weave.py PICT0001.AVI PICT0001.mp4 --bob     # 720x576 at 50p only
+python tools/weave.py PICT0001.AVI PICT0001.mp4           # interlaced only
+python tools/weave.py PICT0001.AVI PICT0001.mp4 --bob     # progressive only
 python tools/weave.py PICT0001.AVI PICT0001.mov --prores  # ProRes 422 HQ + PCM audio, for editing
 ```
-
-NTSC recordings (704×240) are recognised automatically and come out as 720×480 at 29.97i (`_480i`), or 59.94p
-(`_480p60`, or `--bob`).
 
 The converter:
 - pairs each top field with the next bottom field into a full frame (PAL: it tells them apart by the widescreen
@@ -99,7 +98,7 @@ The DVR has its own firmware updater: at power-on it looks for `CRESFW.BIN` in t
 flash chip. That's how Eachine ships updates. Step 5 of the patcher page makes a patched `CRESFW.BIN`: exactly the
 firmware you've been running as ADJUST.BIN, in the vendor's update format and at the same size. After the update the
 DVR starts with it every time, and you no longer need ADJUST.BIN. Keep UPOKE.BIN on the card, because the settings
-(50 fields/s, centring, quality, 31 kHz) still come from it.
+(both fields, centring, quality, 31 kHz) still come from it.
 
 > [!CAUTION]
 > **This writes to the chip.** Try ADJUST.BIN first, with the same PAL/NTSC choice. If the power fails during the
@@ -175,9 +174,9 @@ takes hasn't been measured yet, so connect both if your camera has both.
   isn't settled. It's not the audio rate and not the picture content.
 - **The raw AVI isn't directly watchable:** it holds 704×288 fields, and its header frame rate is wrong, because the
   firmware computes the frame rate from the amount of audio at a fixed 8 kHz. Always run the converter.
-- **Only D1 mode was tested** with the 50i settings, and only with a PAL camera. VGA is stock, and HD records 1280×576.
+- **Only D1 mode was tested** with these settings, and only with a PAL camera. VGA is stock, and HD records 1280×576.
 - **The picture is JPEG at about 35–45 KB per field (about 2 MB/s).** It's a strip encoder with no frame memory, so
-  true 576-line frames are impossible on this chip. That's why the project records fields.
+  true full frames (576 or 480 lines) are impossible on this chip. That's why the project records fields.
 - **ADJUST.BIN is one-shot.** The vendor bootloader deletes it after loading. To make the patch permanent, use the
   DVR's own SD updater ([Making it permanent](#making-it-permanent-sd-card-no-programmer)). Or, if you have a clip programmer, use `tools/flash.sh`.
 - **One firmware only:** Eachine ProDVR firmware 2015.05.26.01.IR (CRESFW.BIN of September 2016). Other versions are
@@ -214,8 +213,8 @@ If you try it, please open an issue with a short raw `.AVI` and what you saw on 
   - a small **poke hook** that reads `UPOKE.BIN` and applies register writes at boot, at record start and every frame
     (it can also log registers into the AVI header for research, see `tools/poke.py` and `tools/plog.py`)
   - a 31 kHz audio header
-- **50i:** the capture front end normally drops every second field. The hook's field gate keeps both, and the
-  encoder gets each 288-line field as its own frame.
+- **Both fields:** the capture front end normally drops every second field. The hook's field gate keeps both, and the
+  encoder gets each field (288 lines PAL, 240 NTSC) as its own frame.
 - **Tearing fix:** the higher bitrate made a band of stale picture appear at the bottom (stock doesn't show it). The
   JPEG encoder overtook the capture DMA while rate control started coarse. Starting at the finest level (`56E6 = 9`)
   removes it.
@@ -235,7 +234,7 @@ the raw lab notebook [docs/lab-notes.md](docs/lab-notes.md).
 |---|---|
 | `docs/index.html` | browser patcher (the patch and UPOKE.BIN are embedded) |
 | `docs/patch.json`, `docs/UPOKE.BIN` | release patch (byte runs with their original bytes, plus the extra `ntsc` runs) and the settings preset |
-| `tools/weave.py` | field-to-576i (PAL) / 480i (NTSC) converter |
+| `tools/weave.py` | converter: weaves the recorded fields into interlaced video (PAL and NTSC) |
 | `tools/convert.bat`, `tools/convert.command`, `tools/convert.sh` | converter launchers for Windows, macOS and Linux (they offer to install what's missing) |
 | `.github/workflows/windows-converter.yml`, `tools/windows-readme.txt` | builds the standalone Windows converter (PyInstaller + ffmpeg essentials) for each `v*` release |
 | `tools/pinouts.py`, `docs/av-*.png` | AV cable pictures: TRRS pinouts (CTIA, OMTP, camcorder AV) and re-soldering to CTIA |
