@@ -7,7 +7,7 @@
 
 **Better video and audio for a cheap FPV mini DVR.**
 
-Custom firmware patches for the small FPV "mini DVR" sold as the **Eachine ProDVR** (and clones built on the same
+Custom firmware patches for the small FPV mini DVR/Eachine ProDVR (and clones built on the same
 board). It was reverse-engineered to record a Sony VX2100E (PAL) as well as this hardware allows.
 
 | | Stock firmware | With this project |
