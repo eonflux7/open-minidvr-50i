@@ -14,7 +14,7 @@ switch off and start without the file, you're back to the stock firmware. Nothin
 
 ## Quick start (no programming needed)
 
-1. **Make the files:** open the patcher page (`docs/index.html`, also served via GitHub Pages) and follow the steps:
+1. **Make the files:** open the patcher page (<https://eonflux7.github.io/open-minidvr-50i/>, or `docs/index.html` offline) and follow the steps:
    - download Eachine's official ProDVR firmware (`CRESFW.BIN`)
    - drop it on the page
    - save **ADJUST.BIN** and **UPOKE.BIN**
@@ -137,3 +137,9 @@ into an ADJUST.BIN. The tests need local files that aren't in the repository: `t
 `hook/` have moved on since then: more logger events, plus experimental edge-fix and wait modes that are off by
 default. So rebuilding peek6 from today's sources won't match the tested binary byte for byte. `docs/patch.json`
 *is* the exact tested build, regenerated with `tools/mkrelease.py json STOCK_DUMP RELEASE_BUILD CRESFW.BIN`.
+
+## License
+
+MIT (see [LICENSE](LICENSE)) for the code and documentation in this repository. The DVR firmware itself belongs to
+its vendor and isn't included. Use at your own risk: the RAM-boot route doesn't write to the DVR's flash, but the
+flashing tools do.
