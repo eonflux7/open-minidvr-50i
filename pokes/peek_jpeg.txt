@@ -1,0 +1,12 @@
+# Read-back log v3b: capture vs JPEG buffer addresses, RAM shadows only.
+# (v3a read write-only JPEG/capture registers directly -> DVR said "card full" and would not record. Do not peek
+#  72DC-72DE, 7314-7317, 7320-7337 directly.)
+# Events: 1 = bit4 (TV-out vsync)  2 = bit1 (capture done, field 1)  3 = bit14 (unused)  4 = bit2 (JPEG done)
+field peek 5229 4   tick       # system tick
+field peek 720D 1   st720D     # capture status (bit0 = field) - safe, read in earlier logs
+field peek 1EE1 1   frames
+field peek 20E0 4   capdst     # shadow of capture destination (bank06:CCFF -> 72DC-72DE)
+field peek 2473 3   desc       # JPEG source descriptor pointer (A943 copies it into 7320-7337)
+field peek 5676 4   jpgout     # JPEG output address shadow (-> 7314-7317 / 7324-7327)
+field peek 1E71 8   enc1E71    # encoder parameters used next to the 7314 setup (bank07:8020)
+field peek 1E91 6   enc1E91    # shadows of 73F0-73F7

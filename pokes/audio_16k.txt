@@ -1,0 +1,19 @@
+# Audio test: hardware byte rate 7904/7905 and 7944/7945 = 0x7D00 (32000 B/s = 16 kHz mono) instead of 0x3E80
+boot write 6BEC 01           # field gate: both fields (50i)
+boot write 6BED 14           # log events 2 and 4
+rec write 7204 08
+rec write 7205 00
+rec write 7208 87
+rec write 7209 05
+rec write 2D23 0008
+rec write 2D27 0587
+rec write 56E6 09            # finest quality at record start
+rec write 7904 007D          # little endian 0x7D00
+rec write 7944 007D
+frame write 7904 007D        # re-apply on every frame in case the audio init runs after record start
+frame write 7944 007D
+field peek 7900 6   a7900
+field peek 7920 12  a7920
+field peek 7944 3   a7944
+field peek 79D0 3   a79D0
+field peek 58FA 3   bytrate

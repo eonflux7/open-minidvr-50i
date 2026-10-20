@@ -1,0 +1,11 @@
+# Read-back log v4: capture buffer pool vs JPEG queue (RAM only + 7284, which earlier logs read safely).
+# Events: 1 = bit4 (TV-out vsync)  2 = bit1 (capture done -> B222 -> A513 takes next free buffer)  4 = bit2 (JPEG done)
+field peek 5229 4   tick
+field peek 720D 1   st720D     # capture status (bit0 = field)
+field peek 1EE1 1   frames
+field peek 5674 2   bufidx     # current capture buffer index (5674), last finished (5675)
+field peek 15FF 5   freeq      # free-buffer queue: 15FF read idx, 1600, 1601, 1602, 1603 empty/full flag
+field peek 1609 4   encq       # captured-frame queue for the encoder: 1609 idx .. 160C
+field peek 1EDC 3   1EDC       # 1EDC (buffer handed over), 1EDD, 1EDE (buffer being encoded, 8BB1)
+field peek 7284 4   cap7284    # capture write address (A59B)
+field peek 1E75 14  jdesc      # JPEG source descriptor (A943 -> 7320-7337)

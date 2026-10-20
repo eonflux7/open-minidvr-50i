@@ -1,0 +1,12 @@
+# Release preset: 50 fields/s (convert with tools/weave.py), centred capture, finest JPEG quality from the start
+# (prevents the tearing band), 31 kHz audio clock. Copy as UPOKE.BIN to the card root next to ADJUST.BIN.
+boot write 6BEC 01           # field gate: both fields
+rec write 7204 08            # capture H start 8 bytes ...
+rec write 7205 00
+rec write 7208 87            # ... H end 0x587 (704 px, centred)
+rec write 7209 05
+rec write 2D23 0008
+rec write 2D27 0587
+rec write 56E6 09            # rate control level at record start: 9 = finest
+rec write 77B2 0808          # audio ADC clock: rate = 496000 / (77B2 + 77B3) = 31000 Hz
+frame write 77B2 0808        # re-applied every frame (record init rewrites the dividers)

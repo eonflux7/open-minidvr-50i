@@ -1,0 +1,15 @@
+# Audio test: only 77C0/77C1 0x1F -> 0x0F (77B2/77B3 stock)
+boot write 6BEC 01           # field gate: both fields (50i)
+boot write 6BED 14           # log events 2 and 4
+rec write 7204 08
+rec write 7205 00
+rec write 7208 87
+rec write 7209 05
+rec write 2D23 0008
+rec write 2D27 0587
+rec write 56E6 09            # finest quality at record start
+rec write 77C0 0F0F
+frame write 77C0 0F0F        # re-apply every frame in case the audio init rewrites them
+field peek 7920 12  a7920
+field peek 77C0 2   c77C0
+field peek 77B2 2   c77B2

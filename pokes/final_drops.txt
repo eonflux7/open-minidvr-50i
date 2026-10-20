@@ -1,0 +1,16 @@
+# Chip firmware (peek6) final candidate: 50i, centred, finest quality from record start, no waits / edge fix.
+# Logs capture-done (ev2) and JPEG-done (ev4) with the pool / encoder queues, to tell where dropped fields come from
+# (PICT0038 had long stretches where only 1 field in 3 was written).
+boot write 6BEC 01           # field gate: both fields (50i)
+boot write 6BED 14           # log events 2 (capture done) and 4 (JPEG done)
+rec write 7204 08            # capture H start 8 B (pixel 4), H end 0x587
+rec write 7205 00
+rec write 7208 87
+rec write 7209 05
+rec write 2D23 0008
+rec write 2D27 0587
+rec write 56E6 09            # rate control level at record start: 9 = finest
+field peek 720D 1   st720D
+field peek 56E6 1   qlevel
+field peek 15FF 5   poolq
+field peek 1609 4   encq

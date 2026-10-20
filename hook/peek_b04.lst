@@ -1,0 +1,17 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051)               Page 1
+Hexadecimal [24-Bits]
+
+
+
+                                      1 ; Keep UPOKE.BIN on the card. The file loader (bank04:8000, CODE:0E3E) deletes every file it has loaded
+                                      2 ; (bank04:81E3 LCALL 1066, needed for UPDATE.TXT). That call now comes here and skips the delete only for our
+                                      3 ; boot hook's request (generic name pointer 01:6BF0, see poke_b10.asm).
+                                      4 
+                                      5         .area   CODE (ABS)
+      00DA00                          6         .org    0xDA00
+                                      7 
+      00DA00 BB 01 07         [24]    8 nodel:  cjne    r3,#0x01,del
+      00DA03 BA 6B 04         [24]    9         cjne    r2,#0x6B,del
+      00DA06 B9 F0 01         [24]   10         cjne    r1,#0xF0,del
+      00DA09 22               [24]   11         ret
+      00DA0A 02 10 66         [24]   12 del:    ljmp    0x1066

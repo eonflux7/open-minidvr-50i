@@ -1,0 +1,10 @@
+# 50i + tearing test: both fields, wait 16 x256 loops before the 72F0/72F1 "go" (82B5, event 5) after each capture.
+boot write 6BEC 01           # field gate: both fields (50i)
+boot write 6BEE 10           # delay before "go" = 16
+boot write 6BED 34           # log events 2 (capture done), 4 (JPEG done), 5 (go)
+field peek 5229 4   tick
+field peek 720D 1   st720D
+field peek 1EE1 1   frames
+field peek 5674 2   bufidx
+field peek 1EDC 3   1EDC
+field peek 5665 1   go5665     # 9ACD: 0 -> other path (9B80)

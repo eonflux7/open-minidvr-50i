@@ -1,0 +1,186 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051)               Page 1
+Hexadecimal [24-Bits]
+
+
+
+                                      1 ; SD-card poke hook, boot part. Lives in bank10 free space (zero padding from D9F5).
+                                      2 ; Entered from bank10:8A7D (was LCALL A517, right after the firmware's own UPDATE.TXT check).
+                                      3 ;
+                                      4 ; If the card is ready and UPOKE.BIN exists, the firmware's loader (CODE:0E3E, bank04:8000) copies it to
+                                      5 ; big-memory 0x7FFE00 (names starting with 'U' go there; <= 512 bytes). We copy those 512 bytes through the
+                                      6 ; XDATA window (page 0xFF at 0xFE00) to XDATA 0x6A00 and apply entries flagged "boot".
+                                      7 ;
+                                      8 ; UPOKE.BIN: "PK01", then 4-byte entries [flags][addr hi][addr lo][value], flags 0 = end.
+                                      9 ;   flags bit0 = apply at boot, bit1 = apply at record start, high nibble = op: 0 write, 1 OR, 2 AND.
+                                     10 ; Entries are read from 0x6A04 up to 0x6BBF (6BC0-6BCF: logger state snapshot, 6BE0-6BE8: logger state).
+                                     11 
+                                     12         .area   CODE (ABS)
+      00DA00                         13         .org    0xDA00
+                                     14 
+      00DA00 90 6B E0         [24]   15 boot:   mov     dptr,#0x6BE0        ; logger disarmed; state, counters and experiment switches 6BE0-6BEF cleared
+      00DA03 7F 10            [12]   16         mov     r7,#16
+      00DA05 E4               [12]   17         clr     a
+      00DA06 F0               [24]   18 bclr:   movx    @dptr,a
+      00DA07 A3               [24]   19         inc     dptr
+      00DA08 DF FC            [24]   20         djnz    r7,bclr
+      00DA0A 90 6B FB         [24]   21         mov     dptr,#0x6BFB        ; edge fix switch, AC40-path wait (peek_b07.asm) off
+      00DA0D F0               [24]   22         movx    @dptr,a
+      00DA0E A3               [24]   23         inc     dptr
+      00DA0F F0               [24]   24         movx    @dptr,a
+      00DA10 12 0C EE         [24]   25         lcall   0x0CEE              ; card ready? (bank04:A543) -> R7
+      00DA13 EF               [12]   26         mov     a,r7
+      00DA14 60 7B            [24]   27         jz      bdone
+      00DA16 90 6B FF         [24]   28         mov     dptr,#0x6BFF        ; RAM self-test of the buffer area
+      00DA19 74 5A            [12]   29         mov     a,#0x5A
+      00DA1B F0               [24]   30         movx    @dptr,a
+      00DA1C E0               [24]   31         movx    a,@dptr
+      00DA1D B4 5A 71         [24]   32         cjne    a,#0x5A,bdone
+      00DA20 74 A5            [12]   33         mov     a,#0xA5
+      00DA22 F0               [24]   34         movx    @dptr,a
+      00DA23 E0               [24]   35         movx    a,@dptr
+      00DA24 B4 A5 6A         [24]   36         cjne    a,#0xA5,bdone
+      00DA27 90 6A 00         [24]   37         mov     dptr,#0x6A00        ; invalidate any stale buffer
+      00DA2A E4               [12]   38         clr     a
+      00DA2B F0               [24]   39         movx    @dptr,a
+      00DA2C 78 F0            [12]   40         mov     r0,#0xF0            ; copy 11-char 8.3 name to XDATA 0x6BF0 (bank10:BA7A, src in CODE)
+      00DA2E 7C 6B            [12]   41         mov     r4,#0x6B
+      00DA30 7A DA            [12]   42         mov     r2,#>name
+      00DA32 79 F7            [12]   43         mov     r1,#<name
+      00DA34 12 BA 7A         [24]   44         lcall   0xBA7A
+      00DA37 7B 01            [12]   45         mov     r3,#0x01            ; generic ptr 01:6BF0 -> look up + load file
+      00DA39 7A 6B            [12]   46         mov     r2,#0x6B
+      00DA3B 79 F0            [12]   47         mov     r1,#0xF0
+      00DA3D 12 0E 3E         [24]   48         lcall   0x0E3E
+      00DA40 EF               [12]   49         mov     a,r7
+      00DA41 60 4E            [24]   50         jz      bdone
+      00DA43 C0 A8            [24]   51         push    0xA8                ; IE
+      00DA45 C2 AF            [12]   52         clr     0xAF                ; EA off while we own the window
+      00DA47 90 70 08         [24]   53         mov     dptr,#0x7008        ; save window read page (we only read; 700A/0B is the write page)
+      00DA4A E0               [24]   54         movx    a,@dptr
+      00DA4B C0 E0            [24]   55         push    0xE0
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051)               Page 2
+Hexadecimal [24-Bits]
+
+
+
+      00DA4D A3               [24]   56         inc     dptr
+      00DA4E E0               [24]   57         movx    a,@dptr
+      00DA4F C0 E0            [24]   58         push    0xE0
+      00DA51 90 70 08         [24]   59         mov     dptr,#0x7008        ; page 0x00FF -> big-memory 0x7F8000 at XDATA 0x8000
+      00DA54 74 FF            [12]   60         mov     a,#0xFF
+      00DA56 F0               [24]   61         movx    @dptr,a
+      00DA57 A3               [24]   62         inc     dptr
+      00DA58 E4               [12]   63         clr     a
+      00DA59 F0               [24]   64         movx    @dptr,a
+      00DA5A 7A FE            [12]   65         mov     r2,#0xFE            ; src 0xFE00
+      00DA5C 7B 00            [12]   66         mov     r3,#0x00
+      00DA5E 7C 6A            [12]   67         mov     r4,#0x6A            ; dst 0x6A00
+      00DA60 7D 00            [12]   68         mov     r5,#0x00
+      00DA62 7E 02            [12]   69         mov     r6,#2               ; 2 x 256 bytes
+      00DA64 7F 00            [12]   70         mov     r7,#0
+      00DA66 8A 83            [24]   71 cpy:    mov     0x83,r2
+      00DA68 8B 82            [24]   72         mov     0x82,r3
+      00DA6A E0               [24]   73         movx    a,@dptr
+      00DA6B A3               [24]   74         inc     dptr
+      00DA6C AA 83            [24]   75         mov     r2,0x83
+      00DA6E AB 82            [24]   76         mov     r3,0x82
+      00DA70 8C 83            [24]   77         mov     0x83,r4
+      00DA72 8D 82            [24]   78         mov     0x82,r5
+      00DA74 F0               [24]   79         movx    @dptr,a
+      00DA75 A3               [24]   80         inc     dptr
+      00DA76 AC 83            [24]   81         mov     r4,0x83
+      00DA78 AD 82            [24]   82         mov     r5,0x82
+      00DA7A DF EA            [24]   83         djnz    r7,cpy
+      00DA7C DE E8            [24]   84         djnz    r6,cpy
+      00DA7E 90 70 09         [24]   85         mov     dptr,#0x7009        ; restore window page
+      00DA81 D0 E0            [24]   86         pop     0xE0
+      00DA83 F0               [24]   87         movx    @dptr,a
+      00DA84 90 70 08         [24]   88         mov     dptr,#0x7008
+      00DA87 D0 E0            [24]   89         pop     0xE0
+      00DA89 F0               [24]   90         movx    @dptr,a
+      00DA8A D0 A8            [24]   91         pop     0xA8
+      00DA8C 7F 01            [12]   92         mov     r7,#0x01            ; apply "boot" entries
+      00DA8E 12 DA 94         [24]   93         lcall   apply
+      00DA91 02 A5 17         [24]   94 bdone:  ljmp    0xA517              ; the call we replaced
+                                     95 
+                                     96 ; apply(R7 = flag mask): walk entries at 0x6A04..0x6BBF
+      00DA94 90 6A 00         [24]   97 apply:  mov     dptr,#0x6A00
+      00DA97 E0               [24]   98         movx    a,@dptr
+      00DA98 B4 50 5B         [24]   99         cjne    a,#0x50,aret        ; 'P'
+      00DA9B A3               [24]  100         inc     dptr
+      00DA9C E0               [24]  101         movx    a,@dptr
+      00DA9D B4 4B 56         [24]  102         cjne    a,#0x4B,aret        ; 'K'
+      00DAA0 A3               [24]  103         inc     dptr
+      00DAA1 E0               [24]  104         movx    a,@dptr
+      00DAA2 B4 30 51         [24]  105         cjne    a,#0x30,aret        ; '0'
+      00DAA5 A3               [24]  106         inc     dptr
+      00DAA6 E0               [24]  107         movx    a,@dptr
+      00DAA7 B4 31 4C         [24]  108         cjne    a,#0x31,aret        ; '1'
+      00DAAA 7A 6A            [12]  109         mov     r2,#0x6A
+      00DAAC 7B 04            [12]  110         mov     r3,#0x04
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051)               Page 3
+Hexadecimal [24-Bits]
+
+
+
+      00DAAE EA               [12]  111 aloop:  mov     a,r2                ; stop at 0x6BC0
+      00DAAF 64 6B            [12]  112         xrl     a,#0x6B
+      00DAB1 70 06            [24]  113         jnz     aok
+      00DAB3 EB               [12]  114         mov     a,r3
+      00DAB4 C3               [12]  115         clr     c
+      00DAB5 94 C0            [12]  116         subb    a,#0xC0
+      00DAB7 50 3D            [24]  117         jnc     aret
+      00DAB9 8A 83            [24]  118 aok:    mov     0x83,r2
+      00DABB 8B 82            [24]  119         mov     0x82,r3
+      00DABD E0               [24]  120         movx    a,@dptr
+      00DABE 60 36            [24]  121         jz      aret
+      00DAC0 FC               [12]  122         mov     r4,a                ; flags
+      00DAC1 A3               [24]  123         inc     dptr
+      00DAC2 E0               [24]  124         movx    a,@dptr
+      00DAC3 FD               [12]  125         mov     r5,a                ; addr hi
+      00DAC4 A3               [24]  126         inc     dptr
+      00DAC5 E0               [24]  127         movx    a,@dptr
+      00DAC6 FE               [12]  128         mov     r6,a                ; addr lo
+      00DAC7 A3               [24]  129         inc     dptr
+      00DAC8 E0               [24]  130         movx    a,@dptr
+      00DAC9 F8               [12]  131         mov     r0,a                ; value
+      00DACA EB               [12]  132         mov     a,r3
+      00DACB 24 04            [12]  133         add     a,#4
+      00DACD FB               [12]  134         mov     r3,a
+      00DACE EA               [12]  135         mov     a,r2
+      00DACF 34 00            [12]  136         addc    a,#0
+      00DAD1 FA               [12]  137         mov     r2,a
+      00DAD2 EC               [12]  138         mov     a,r4
+      00DAD3 5F               [12]  139         anl     a,r7
+      00DAD4 60 D8            [24]  140         jz      aloop
+      00DAD6 8D 83            [24]  141         mov     0x83,r5
+      00DAD8 8E 82            [24]  142         mov     0x82,r6
+      00DADA EC               [12]  143         mov     a,r4
+      00DADB C4               [12]  144         swap    a
+      00DADC 54 0F            [12]  145         anl     a,#0x0F
+      00DADE 60 08            [24]  146         jz      awr
+      00DAE0 14               [12]  147         dec     a
+      00DAE1 60 09            [24]  148         jz      aor
+      00DAE3 14               [12]  149         dec     a
+      00DAE4 60 0B            [24]  150         jz      aand
+      00DAE6 80 C6            [24]  151         sjmp    aloop
+      00DAE8 E8               [12]  152 awr:    mov     a,r0
+      00DAE9 F0               [24]  153         movx    @dptr,a
+      00DAEA 80 C2            [24]  154         sjmp    aloop
+      00DAEC E0               [24]  155 aor:    movx    a,@dptr
+      00DAED 48               [12]  156         orl     a,r0
+      00DAEE F0               [24]  157         movx    @dptr,a
+      00DAEF 80 BD            [24]  158         sjmp    aloop
+      00DAF1 E0               [24]  159 aand:   movx    a,@dptr
+      00DAF2 58               [12]  160         anl     a,r0
+      00DAF3 F0               [24]  161         movx    @dptr,a
+      00DAF4 80 B8            [24]  162         sjmp    aloop
+      00DAF6 22               [24]  163 aret:   ret
+                                    164 
+      00DAF7 55 50 4F 4B 45 20 20   165 name:   .ascii  "UPOKE   BIN"
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051)               Page 4
+Hexadecimal [24-Bits]
+
+
+
+             20 42 49 4E

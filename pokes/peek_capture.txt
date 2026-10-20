@@ -1,0 +1,14 @@
+# Read-back log v1: capture ring state on every field (for the tearing band). Decode: tools/plog.py PICTxxxx.AVI pokes/peek_capture.txt
+field peek 720D 1   st720D     # capture status (bit7 = field id?)
+field peek 720C 1   ctl720C    # capture control after re-arm
+field peek 2460 4   int0st     # INT0 status copy taken by the dispatcher
+field peek 5639 1   skip1      # frame gate: skip-once flag
+field peek 552A 1   cntdn      # frame gate: countdown
+field peek 5529 1   gatebits
+field peek 552B 2   ring552B   # slot index / limit
+field peek 54DB 6   ring54DB   # ring write index, count, ...
+field peek 5535 1   slot
+field peek 246C 4   slotaddr   # current slot + next capture address
+field peek 72DD 3   capdst     # capture destination registers
+field peek 7284 4   cap7284
+field peek 72C7 1   r72C7

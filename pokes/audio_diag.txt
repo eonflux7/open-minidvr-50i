@@ -1,0 +1,20 @@
+# Audio 16 kHz diagnostic (chip fw peek6, no ADJUST.BIN): clock 0F+10 = 16000 Hz, log the audio chunk state machine
+boot write 6BEC 01           # field gate: both fields (50i)
+boot write 6BED 14           # log events 2 and 4
+rec write 7204 08
+rec write 7205 00
+rec write 7208 87
+rec write 7209 05
+rec write 2D23 0008
+rec write 2D27 0587
+rec write 56E6 09            # finest quality at record start
+rec write 77B2 0F10
+frame write 77B2 0F10
+field peek 7928 4   hwptr
+field peek 5905 4   rdptr
+field peek 56E7 5   st56E7
+field peek 56D5 2   st56D5
+field peek 3719 1   wr3719
+field peek 56EE 24  abook
+field peek 15FF 5   poolq
+field peek 1609 4   encq

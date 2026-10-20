@@ -1,0 +1,14 @@
+# 50i + JPEG start waits for end of field (tear fix) + capture window moved 4 px left (centre the analog picture).
+boot write 6BEC 01           # field gate: both fields (50i)
+boot write 6BEE FF           # JPEG start: wait for end of field
+# capture H start 16 -> 8 bytes (pixel 8 -> 4), H end = start + size - 1 = 0x587 (bank06:8098); registers + shadows
+rec write 7204 08            # H start lo
+rec write 7205 00            # H start hi
+rec write 7208 87            # H end lo
+rec write 7209 05            # H end hi
+rec write 2D23 0008          # shadow H start (big-endian word)
+rec write 2D27 0587          # shadow H end
+boot write 6BED 04           # log only capture-done (event 2)
+field peek 720D 1   st720D
+field peek 2D23 6   hwin       # 2D23-2D28: H start, ?, H end shadows
+field peek 2D2B 4   hsize_vsz  # H size, V size

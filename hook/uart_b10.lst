@@ -1,0 +1,20 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051)               Page 1
+Hexadecimal [24-Bits]
+
+
+
+                                      1 ; UART pin finder (test only, run from RAM via ADJUST.BIN). Lives in bank10 free space at E000.
+                                      2 ; Entered from bank10:8A7D instead of the boot hook. Re-runs the firmware's UART setup (bank11:B939 via stub
+                                      3 ; CODE:0B80; the normal boot already does this at bank10:89A3), then stops the system (interrupts off) and sends 'U'
+                                      4 ; (0x55 = 0101010101 with start/stop bits) back to back forever: the TX pin averages ~half the supply voltage, so a
+                                      5 ; multimeter finds it. Power off to end the test.
+                                      6 
+                                      7         .area   CODE (ABS)
+      00E000                          8         .org    0xE000
+                                      9 
+      00E000 12 0B 80         [24]   10 ut:     lcall   0x0B80              ; UART setup (pins, baud, SCON = 0x50)
+      00E003 C2 AF            [12]   11         clr     0xAF                ; EA off: nothing else runs
+      00E005 75 99 55         [24]   12 uloop:  mov     0x99,#0x55          ; SBUF = 'U'
+      00E008 30 99 FD         [24]   13 uwait:  jnb     0x99,uwait          ; TI
+      00E00B C2 99            [12]   14         clr     0x99
+      00E00D 80 F6            [24]   15         sjmp    uloop

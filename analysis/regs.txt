@@ -1,0 +1,734 @@
+7000 W:CODE:0216 CODE:0233 CODE:0250 CODE:026d CODE:028a CODE:02a7 CODE:02c4 CODE:02e1 CODE:02fe CODE:031b CODE:0338 CODE:0355 CODE:0372 CODE:038f CODE:03ac CODE:03c9 CODE:4199 bank03:c199 bank04:c199 bank05:c199 bank07:c199 bank11:c199 R:
+7001 W:CODE:4195 bank03:c195 bank04:c195 bank05:c195 bank07:c195 bank11:c195 R:
+7002 W:CODE:0041 CODE:0049 R:
+7003 W:CODE:0045 CODE:004d R:CODE:012c CODE:4191 bank03:c191 bank04:c191 bank05:c191 bank07:c191 bank11:c191
+7004 W:CODE:419f bank03:c19f bank04:c19f bank05:c19f bank07:c19f bank11:c19f R:
+7005 W: R:bank13:c927 bank13:d4ec bank13:dfc1 bank16:d25e bank16:d699
+7007 W: R:bank02:82fa bank02:8334 bank02:8c50 bank02:9af5 bank02:9c3d bank02:a8d8 bank02:a93c bank02:aaac bank02:c692 bank02:c73a bank02:c78b bank02:cf1d bank02:e9ab bank11:b4e3 bank13:8412 bank13:b793 bank13:c770 bank13:c84f bank13:c8e2 bank13:cc5e bank13:d4e1 bank13:e5c0 bank16:ad52 bank16:d5f1
+7008 W:CODE:00a9 CODE:474e bank02:8205 bank02:8262 bank02:82a2 bank02:8373 bank02:a964 bank02:a9c3 bank02:aeeb bank02:af07 bank02:db28 bank03:9f32 bank03:c74e bank04:c74e bank05:c74e bank06:a45f bank07:c74e bank09:808b bank09:bca5 bank10:c74e bank11:91ea bank11:b0ca bank11:c74e bank13:a05e bank13:b15d bank13:c730 bank13:e12a bank16:854c bank16:a070 bank16:ae27 bank16:b0f5 bank16:b257 bank16:b79f R:
+7009 W:CODE:0081 CODE:417e bank02:826a bank02:82aa bank02:837c bank02:a96d bank02:a9cc bank02:aef3 bank02:af0f bank02:db32 bank03:9f3b bank03:c17e bank04:c17e bank05:c17e bank07:c17e bank11:c17e bank13:a066 bank13:b165 bank13:c738 R:
+700A W:CODE:00a2 CODE:429e bank02:81fc bank02:9913 bank02:a97d bank02:ea0a bank03:c29e bank04:c29e bank05:c29e bank07:c29e bank08:dd52 bank09:807d bank09:82a1 bank09:a288 bank09:b0a0 bank09:bc96 bank09:e127 bank09:e820 bank11:b5b3 bank11:b891 bank11:c29e bank13:a132 bank13:b14c bank13:c811 bank13:cc23 bank16:ad19 R:
+700B W:CODE:0085 CODE:4183 CODE:4298 bank02:991c bank02:ea14 bank03:c183 bank03:c298 bank04:c183 bank04:c298 bank05:c183 bank05:c298 bank07:c183 bank07:c298 bank08:dd5a bank09:b0ab bank09:bca1 bank11:c183 bank11:c298 bank13:a13a bank13:b154 bank13:c819 bank13:cc2b R:
+700C W:bank08:da20 bank10:ba8d R:
+7020 W:CODE:0051 CODE:4165 bank03:c165 bank04:c165 bank05:c165 bank07:c165 bank11:c165 R:
+7100 W:CODE:0153 R:
+7101 W:CODE:0159 R:
+7102 W:CODE:015f CODE:016d CODE:0173 CODE:0179 R:CODE:017d
+7103 W:CODE:0167 R:
+7104 W:CODE:0185 R:
+7105 W:CODE:018b R:
+7106 W:CODE:418b CODE:4405 CODE:44a2 bank03:c18b bank03:c405 bank03:c4a2 bank04:c18b bank04:c405 bank04:c4a2 bank05:c18b bank05:c405 bank05:c4a2 bank07:c18b bank07:c405 bank07:c4a2 bank11:c18b bank11:c405 bank11:c4a2 R:
+7110 W:bank15:d08a bank16:d87d R:bank16:d9f9
+7114 W:bank15:9e6f bank15:9eea bank15:d084 bank16:d878 bank16:d9f4 R:
+7120 W:CODE:43b3 bank03:c3b3 bank04:c3b3 bank05:c3b3 bank07:c3b3 bank11:c3b3 R:
+7121 W:CODE:43b9 bank03:c3b9 bank04:c3b9 bank05:c3b9 bank07:c3b9 bank11:c3b9 R:
+7122 W:CODE:43bf bank03:c3bf bank04:c3bf bank05:c3bf bank07:c3bf bank11:c3bf R:
+7123 W:CODE:43c5 bank03:c3c5 bank04:c3c5 bank05:c3c5 bank07:c3c5 bank11:c3c5 R:
+7124 W:CODE:43cb bank03:c3cb bank04:c3cb bank05:c3cb bank07:c3cb bank11:c3cb R:
+7125 W:CODE:43d1 bank03:c3d1 bank04:c3d1 bank05:c3d1 bank07:c3d1 bank11:c3d1 R:
+7200 W:bank06:ac38 bank06:b509 R:bank06:cdbd bank06:d1ec bank06:d38f bank06:d409 bank07:8442
+7201 W:bank06:ac40 bank06:b511 R:bank06:d399 bank06:d3a3 bank06:d411 bank06:d419 bank07:83a8 bank07:b1f5 bank10:bff6
+7202 W:bank06:cbbf bank06:cbca bank06:cbd5 bank06:cbe0 R:
+7204 W:bank06:ab72 R:
+7205 W:bank06:ab7a R:
+7206 W:bank06:ab82 R:
+7207 W:bank06:ab8a R:
+7208 W:bank06:ab92 R:
+7209 W:bank06:ab9a R:
+720A W:bank06:aba2 R:
+720B W:bank06:abaa R:
+720C W: R:bank06:abba bank06:b4ac bank06:cd2c bank07:83d8 bank08:f08e bank10:c313
+720D W: R:CODE:4db3 bank02:fc9d bank03:cdb3 bank04:cdb3 bank05:cdb3 bank06:d1f3 bank06:d421 bank06:d429 bank07:9e45 bank07:9f4a bank07:cdb3 bank10:cdb3 bank11:cdb3 bank12:cdb3
+720E W: R:bank06:cb77 bank06:cb87
+720F W: R:bank06:cb7f bank06:cb8f
+7210 W:bank06:cda1 R:
+7211 W:bank06:cda9 R:
+7212 W:bank06:cdb1 R:
+7213 W:bank06:cdb9 R:
+7220 W: R:bank06:abcf bank06:b4c4
+7222 W:bank06:cc4e R:
+7223 W:bank06:cc56 R:
+7224 W:bank06:cc2e R:
+7225 W:bank06:cc36 R:
+7226 W:bank06:cc3e R:
+7227 W:bank06:cc46 R:
+7228 W:bank06:b47f R:
+7229 W:bank06:b487 R:
+722A W:bank06:b4a0 R:
+722B W:bank06:b4a8 R:
+7230 W:bank06:cf21 R:
+7231 W:bank06:cf2e R:
+7232 W:bank06:cf2a R:
+7233 W:bank06:cf34 R:
+7234 W:bank06:d183 R:
+7240 W:bank06:cf60 R:
+7241 W:bank06:cf68 R:
+7242 W:bank06:cf70 R:
+7243 W:bank06:cf78 R:
+7250 W:bank06:b5f6 R:
+7251 W:bank06:b5fe R:
+7252 W:bank06:b606 R:
+7253 W:bank06:b60e R:
+7254 W:bank06:b616 R:
+7255 W:bank06:b61e R:
+7256 W:bank06:b626 R:
+7257 W:bank06:b62e R:
+7258 W:bank06:b636 R:
+7260 W:bank08:f063 R:
+7264 W:bank08:f06f R:
+7265 W:bank08:f069 R:
+7266 W:bank08:f07a R:
+7267 W:bank08:f075 R:
+7268 W:bank08:f082 R:
+7269 W:bank08:f07e R:
+726A W:bank08:f08a R:
+726B W:bank08:f086 R:
+7270 W:bank06:d0bc bank06:d0c6 R:
+7280 W:bank06:ac08 bank06:b4f3 bank06:ce73 R:
+7284 W:bank06:cc65 bank07:a59b R:
+7285 W:bank06:cc6d bank07:a5a3 R:
+7286 W:bank06:cc75 bank07:a5ab R:
+7287 W:bank06:cc7d bank07:a5b3 R:
+7288 W:bank06:cc85 R:
+7289 W:bank06:cc8d R:
+728A W:bank06:ac11 bank06:b4f8 R:
+728C W:bank06:abfc bank06:ce67 R:
+728D W:bank06:ac04 bank06:ce6f R:
+7290 W:bank06:c954 R:
+7291 W:bank06:c95c R:
+7292 W:bank06:c964 R:
+7293 W:bank06:c96c R:
+7294 W:bank06:c974 R:
+7295 W:bank06:c97c R:
+7296 W:bank06:c984 R:
+7297 W:bank06:c98c R:
+72B0 W:bank06:ac19 R:
+72B1 W:bank06:ac21 R:
+72B2 W:bank06:ac29 R:
+72B6 W:bank06:ce50 R:bank06:ac2d bank06:b4fe
+72BC W:bank06:d0ed R:
+72BD W:bank06:d0f5 R:
+72BE W:bank06:d0fd R:
+72C0 W:bank06:c442 R:
+72C1 W:bank06:c44a R:
+72C2 W:bank06:c452 R:
+72C3 W:bank06:c45a R:
+72C4 W:bank06:c462 R:
+72C5 W:bank06:c474 R:
+72C6 W:bank06:c47c R:
+72C7 W: R:bank06:c491 bank06:d0e0 bank06:d431 bank07:8323 bank07:a8d2
+72C8 W:bank06:bae7 R:
+72C9 W:bank06:baef R:
+72CA W:bank06:baf7 R:
+72CB W:bank06:baff R:
+72CC W:bank06:bb07 R:
+72CD W:bank06:bb0f R:
+72D0 W:bank06:bb17 R:
+72D1 W:bank06:bb1f R:
+72D2 W:bank06:bb27 R:
+72D3 W:bank06:bb2f R:
+72D4 W:bank06:bb37 R:
+72D5 W:bank06:bb3f R:
+72D6 W:bank06:bb47 R:
+72D7 W:bank06:bb4f R:
+72D8 W:bank06:bb57 R:
+72D9 W:bank06:bb5f R:
+72DA W:bank06:bb67 R:
+72DB W:bank06:bb6f R:
+72DC W:bank06:cd09 R:
+72DD W:bank06:cd11 bank07:a927 R:
+72DE W:bank06:cd19 bank07:a92f R:
+72DF W: R:bank06:cd24 bank06:d0d4 bank07:832c bank07:a93a
+72E0 W:bank06:b63e R:
+72E1 W:bank06:b646 R:
+72E2 W:bank06:b64e R:
+72E3 W:bank06:b656 R:
+72E4 W:bank06:b65e R:
+72E5 W:bank06:b666 R:
+72E6 W:bank06:b66e R:
+72E7 W:bank06:b676 R:
+72E8 W:bank06:b67e R:
+72E9 W:bank06:b686 R:
+72EA W:bank06:b68e R:
+72EB W:bank06:b696 R:
+72EC W:bank06:b69e R:
+72ED W:bank06:b6a6 R:
+72EE W:bank06:b6ae R:
+72EF W:bank06:b6b6 R:
+72F0 W:bank06:a559 bank06:a663 bank06:ac55 bank06:ac67 bank06:ac7b bank06:ac8f bank06:aca3 bank06:acb7 bank06:accb bank06:acdf bank06:acf3 bank06:ad07 bank06:ad1b bank06:ad2f bank06:bf1a bank06:bf2f bank06:bf44 bank06:bf59 bank06:bf6e bank06:bf83 bank06:c991 bank06:c9a6 bank06:c9bb bank06:c9d1 bank06:c9e5 bank06:c9fa bank07:82b5 bank07:8342 bank07:9b59 bank07:9b6a R:
+72F4 W:bank06:a57e bank06:a59e bank06:a5be bank06:a5de bank06:a5fe bank06:a61e bank06:a63e bank06:a65e bank06:a688 bank06:a6a8 bank06:a6c8 bank06:a6e8 bank06:a708 bank06:a728 bank06:a748 bank06:a768 bank06:c4ea bank07:b32b R:
+72F5 W:bank06:a576 bank06:a596 bank06:a5b6 bank06:a5d6 bank06:a5f6 bank06:a616 bank06:a636 bank06:a656 bank06:a680 bank06:a6a0 bank06:a6c0 bank06:a6e0 bank06:a700 bank06:a720 bank06:a740 bank06:a760 bank06:c4e2 bank07:b323 R:
+72F6 W:bank06:a56e bank06:a58e bank06:a5ae bank06:a5ce bank06:a5ee bank06:a60e bank06:a62e bank06:a64e bank06:a678 bank06:a698 bank06:a6b8 bank06:a6d8 bank06:a6f8 bank06:a718 bank06:a738 bank06:a758 R:
+72F7 W:bank06:a566 bank06:a586 bank06:a5a6 bank06:a5c6 bank06:a5e6 bank06:a606 bank06:a626 bank06:a646 bank06:a670 bank06:a690 bank06:a6b0 bank06:a6d0 bank06:a6f0 bank06:a710 bank06:a730 bank06:a750 R:
+7300 W:bank06:cb63 bank06:d1dd bank07:82c2 R:bank02:bb5b bank06:cb3d bank06:d385 bank06:d401 bank07:82da bank07:833a bank07:83be bank07:b404 bank09:87e6 bank09:d02b bank09:dff5
+7301 W:bank07:82ca bank09:cff5 R:
+7302 W:bank07:82d2 R:bank07:8333 bank07:83b7
+7303 W:bank06:d061 R:
+7304 W: R:bank06:d1bb bank06:d1c3 bank07:8bce bank07:8d0b bank07:a072 bank07:aba4 bank07:acc2 bank07:b3fc bank09:8b36
+7310 W:bank06:d055 R:
+7311 W:bank06:d05d R:
+7314 W:bank06:c01c bank07:8036 bank07:9fc1 bank09:cf25 R:
+7315 W:bank06:c024 bank07:803e bank07:9fc9 bank09:cf2d R:
+7316 W:bank06:c02c bank07:8046 bank07:9fd1 bank09:cf35 R:
+7317 W:bank06:c034 bank07:804e bank07:9fd9 bank09:cf3d R:
+7318 W:bank06:c07a bank09:cf73 R:
+7319 W:bank06:c082 bank09:cf7b R:
+731A W:bank09:cf69 R:bank06:c03f bank06:c04e bank07:8451 bank07:9f9d
+7320 W:bank06:c411 bank09:cfb9 R:
+7321 W:bank06:c419 bank07:a962 bank09:cfc1 R:
+7322 W:bank06:c421 bank09:cfc9 R:
+7323 W:bank06:c429 bank07:a978 bank09:cfd1 R:
+7324 W:bank06:c3f1 bank07:81f3 bank07:ab41 bank09:cf4d R:
+7325 W:bank06:c3f9 bank07:81fb bank07:ab4a bank09:cf55 R:
+7326 W:bank06:c401 bank07:8203 bank07:ab53 bank09:cf5d R:
+7327 W:bank06:c409 bank07:820b bank07:ab5c bank09:cf65 R:
+7328 W:bank06:c431 bank07:8213 bank09:cfa9 R:
+7329 W:bank06:c439 bank07:821b bank07:a98e bank09:cfb1 R:
+732A W:bank06:c3e9 bank07:a94f bank07:ab38 bank09:cf41 bank09:cf9f R:bank06:b200 bank06:b227 bank07:80c7 bank07:a768 bank07:a798
+732B W: R:bank06:c71d bank06:d342 bank07:a9db bank08:abae bank09:d023
+7330 W:bank06:c6f9 bank07:a9ae bank09:d00a R:
+7332 W:bank06:c6ed bank09:cfd9 R:
+7333 W:bank06:c6f5 bank07:a9a4 bank09:cfe1 R:
+7334 W:bank06:c712 bank07:a9ce bank09:d018 R:
+7336 W:bank06:c702 bank09:cfe9 R:
+7337 W:bank06:c70a bank07:a9c4 bank09:cff1 R:
+7338 W:bank06:ced0 R:
+7339 W:bank06:ced8 R:
+733A W:bank06:cee0 R:
+733C W:bank06:c05a bank09:cf83 R:
+733D W:bank06:c062 bank09:cf8b R:
+733E W:bank06:c06a bank09:cf93 R:
+733F W:bank06:c072 bank09:cf9b R:
+7340 W:bank06:d3f0 bank07:9fa9 bank09:cf19 R:
+7341 W:bank07:9fb1 R:
+7343 W:bank06:d457 bank07:9fb9 R:
+7344 W:bank06:b1d4 R:
+7345 W:bank06:b1dc R:
+7346 W:bank06:b1e4 R:
+7347 W:bank06:b1ec R:
+7348 W:bank06:b1f4 R:
+7349 W:bank06:b1fc bank07:a764 R:
+734C W:bank06:b20b bank06:b234 bank07:8291 R:
+734D W:bank06:b213 bank06:b23c bank07:a77e bank07:a7b0 R:
+734E W:bank06:b21b bank06:b244 R:
+734F W:bank06:b223 bank06:b24c bank07:a794 bank07:a7c6 R:
+7350 W:bank06:b254 R:
+7351 W:bank06:b25c bank07:a7dc R:
+7352 W:bank06:b264 R:
+7353 W:bank06:b26c bank07:a7f2 R:
+7354 W:bank06:b274 R:
+7355 W:bank06:b27c R:
+7356 W:bank06:b284 R:
+7357 W:bank06:b28c R:
+7358 W:bank06:b294 R:
+7359 W:bank06:b29c R:
+735C W:bank06:b2a4 R:
+7360 W:bank06:9634 bank06:96fa R:
+7361 W:bank06:963c bank06:9702 R:
+7362 W:bank06:9644 bank06:970a R:
+7363 W:bank06:964c bank06:9712 R:
+7364 W:bank06:9654 bank06:971a R:
+7365 W:bank06:965c bank06:9722 R:
+7366 W:bank06:9664 bank06:972a R:
+7367 W:bank06:966c bank06:9732 R:
+7368 W:bank06:9674 bank06:973a R:
+7369 W:bank06:967c bank06:9742 R:
+736A W:bank06:9684 bank06:974a R:
+736B W:bank06:968c bank06:9752 R:
+736C W:bank06:9694 bank06:975a R:
+736D W:bank06:969c bank06:9762 R:
+736E W:bank06:96a4 bank06:976a R:
+736F W:bank06:96ac bank06:9772 R:
+7370 W:bank06:96b4 bank06:977a R:
+7371 W:bank06:96bc bank06:9782 R:
+7372 W:bank06:96c4 bank06:978a R:
+7373 W:bank06:96cc bank06:9792 R:
+7374 W:bank06:96d4 bank06:979a R:
+7375 W:bank06:96dc bank06:97a2 R:
+7376 W:bank06:96e4 bank06:97aa R:
+7377 W:bank06:96ec bank06:97b2 R:
+7378 W:bank06:97ba R:
+7379 W:bank06:97c2 R:
+737A W:bank06:97ca R:
+737B W:bank06:97d2 R:
+737C W:bank06:97da R:
+737D W:bank06:962b bank06:96f0 R:
+7380 W:bank06:ce29 R:
+7381 W:bank06:ce3b R:
+7382 W:bank06:ce43 R:
+7383 W:bank06:ce4b R:
+7384 W:bank06:c641 R:
+7385 W: R:bank06:c64c bank06:c65f bank06:c673
+7386 W:bank06:c67f R:
+7387 W:bank06:c687 R:
+738C W:bank06:c5a1 R:
+738D W:bank06:c5a9 R:
+738E W:bank06:c5b1 R:
+738F W:bank06:c5b9 R:
+7390 W:bank06:c5c1 R:
+7391 W:bank06:c5c9 R:
+7392 W:bank06:c5d1 R:
+7393 W:bank06:c5d9 R:
+7394 W:bank06:c5e1 R:
+7395 W:bank06:c5e9 R:
+7398 W:bank06:bd32 R:
+7399 W:bank06:bd45 R:
+739A W:bank06:bd58 R:
+739B W:bank06:bd6b R:
+739C W:bank06:bd1f R:
+739E W:bank06:bd7e bank07:ae46 R:
+739F W:bank06:bd91 bank07:ae5c R:
+73A0 W:bank06:bc92 bank07:ad61 R:
+73A1 W:bank06:bc9a bank07:ad69 R:
+73A2 W:bank06:bca2 bank07:ad71 R:
+73A3 W:bank06:bcaa bank07:ad79 R:
+73A4 W:bank06:bcb2 bank07:ad81 R:
+73A5 W:bank06:bcba bank07:ad89 R:
+73A6 W:bank06:bcc2 bank07:ad91 R:
+73A7 W:bank06:bcca bank07:ad99 R:
+73A8 W:bank06:bcd2 bank07:ada1 R:
+73A9 W:bank06:bcda bank07:ada9 R:
+73AA W:bank06:bce2 bank07:adb1 R:
+73AB W:bank06:bcea bank07:adb9 R:
+73AC W:bank06:bcf2 bank07:adc1 R:
+73AD W:bank06:bcfa bank07:adc9 R:
+73AE W:bank06:bd02 bank07:add1 R:
+73AF W:bank06:bd0a bank07:add9 R:
+73B0 W:bank06:bd12 bank07:ade1 R:
+73B2 W:bank06:c562 R:
+73B3 W:bank06:c573 R:
+73B4 W:bank06:c551 R:
+73B6 W:bank06:c584 R:
+73B7 W:bank06:c595 R:
+73B8 W:bank06:b781 bank06:b796 bank06:b7ac bank06:b7c2 bank06:b7d8 bank06:b7ee bank06:b804 bank06:b81a bank06:b830 R:
+73BA W:bank06:b78a bank06:b7a0 bank06:b7b6 bank06:b7cc bank06:b7e2 bank06:b7f8 bank06:b80e bank06:b824 bank06:b83a R:
+73BB W:bank06:b792 bank06:b7a8 bank06:b7be bank06:b7d4 bank06:b7ea bank06:b800 bank06:b816 bank06:b82c bank06:b842 R:
+73BC W:bank06:8554 bank06:859c bank06:85e4 bank06:862c bank06:8674 bank06:86bc bank06:8704 bank06:874c bank06:8794 bank06:87dc bank06:8824 bank06:886c R:
+73BE W:bank06:856a bank06:85b2 bank06:85fa bank06:8642 bank06:868a bank06:86d2 bank06:871a bank06:8762 bank06:87aa bank06:87f2 bank06:883a bank06:8882 R:
+73BF W:bank06:8580 bank06:85c8 bank06:8610 bank06:8658 bank06:86a0 bank06:86e8 bank06:8730 bank06:8778 bank06:87c0 bank06:8808 bank06:8850 bank06:8898 R:
+73C0 W:bank06:b38f bank06:b3c4 bank06:b3fa bank06:b430 R:
+73C1 W:bank06:b38b R:
+73C2 W:bank06:b398 bank06:b3ce bank06:b404 bank06:b43a R:
+73C3 W:bank06:b3a0 bank06:b3d6 bank06:b40c bank06:b442 R:
+73C4 W:bank06:b3a8 bank06:b3de bank06:b414 R:
+73C5 W:bank06:b3b0 bank06:b3e6 bank06:b41c R:
+73C6 W:bank06:b3b8 bank06:b3ee bank06:b424 R:
+73C7 W:bank06:b3c0 bank06:b3f6 bank06:b42c R:
+73CB W:bank06:b454 R:
+73CC W:bank06:c913 R:
+73CD W:bank06:c91b R:
+73CE W:bank06:c923 R:
+73CF W:bank06:c92b R:
+73D0 W:bank06:c933 R:
+73D1 W:bank06:c93b R:
+73D2 W:bank06:c943 R:
+73D3 W:bank06:c94b R:
+73D4 W:bank06:a0cb R:
+73D5 W:bank06:a0d3 bank06:a0f1 bank06:a13a bank06:a184 bank06:a1ce R:
+73D6 W:bank06:a0db R:
+73D7 W:bank06:a0e9 R:
+73D8 W:bank06:cee8 R:
+73D9 W:bank06:cef0 R:
+73DC W:bank06:cbef R:
+73DD W:bank06:cbf7 R:
+73DE W:bank06:cbff R:
+73DF W:bank06:cc07 R:
+73E0 W:bank06:cc0f R:
+73E1 W:bank06:cc17 R:
+73E2 W:bank06:cc1f R:
+73E4 W:bank06:d1d0 R:
+73E5 W:bank06:d1d8 R:
+73E8 W: R:bank06:cb46
+73E9 W: R:bank06:cb4e
+73EA W: R:bank06:cb56
+73EC W:bank06:a0f9 bank06:a142 bank06:a18c bank06:a1d6 R:
+73ED W:bank06:a101 bank06:a14a bank06:a194 bank06:a1de R:
+73EE W:bank06:a109 bank06:a152 bank06:a19c bank06:a1e6 R:
+73EF W:bank06:a111 bank06:a15a bank06:a1a4 bank06:a1ee R:
+73F0 W:bank06:cae4 bank07:8066 bank07:9ff1 R:
+73F2 W:bank06:cad8 bank07:8056 bank07:9fe1 R:
+73F3 W:bank06:cae0 bank07:805e bank07:9fe9 R:
+73F4 W:bank06:cafd bank07:807e bank07:a009 R:
+73F6 W:bank06:caed bank07:806e bank07:9ff9 R:
+73F7 W:bank06:caf5 bank07:8076 bank07:a001 R:
+73F8 W:bank06:cf3f R:
+73F9 W:bank06:cf47 R:
+73FA W:bank06:cf4f R:
+73FB W:bank06:cf57 R:
+73FC W:bank06:a119 bank06:a162 bank06:a1ac bank06:a1f6 R:
+73FD W:bank06:a121 bank06:a16a bank06:a1b4 bank06:a1fe R:
+73FE W:bank06:a129 bank06:a172 bank06:a1bc bank06:a206 R:
+73FF W:bank06:a131 bank06:a17a bank06:a1c4 bank06:a20e R:
+7400 W:bank06:d3cb bank09:8ec5 bank09:9996 bank09:d271 R:bank06:d3c1 bank06:d439 bank06:d441 bank06:d449 bank09:8984 bank09:8a70 bank09:8b8a bank09:dfda
+7402 W:bank04:8d7d R:
+7404 W:bank06:c4fc bank06:cc9c bank08:e67c bank09:9060 bank09:9a81 bank09:d328 R:
+7405 W:bank06:c504 bank06:cca4 bank09:9068 bank09:9a89 bank09:d330 R:
+7406 W:bank06:c50c bank06:ccac bank09:9070 bank09:9a91 bank09:d338 R:
+7407 W:bank06:c514 bank06:ccb4 bank09:8980 bank09:d340 R:
+7408 W:bank06:c53c bank06:ccbc bank09:8eed bank09:99be R:
+7409 W:bank06:c544 bank06:ccc4 bank09:8ef5 bank09:99c6 bank09:d2b0 R:
+740C W:bank06:c099 bank06:c51c bank07:8d23 bank07:a053 bank09:8ecd bank09:999e R:
+740D W:bank06:c0a1 bank06:c524 bank07:8d2b bank09:8ed5 bank09:99a6 bank09:d284 R:
+740E W:bank06:c0a9 bank06:c52c bank07:8d33 bank09:8edd bank09:99ae R:
+740F W:bank06:c0b1 bank06:c534 bank07:8d3b bank09:8ee5 bank09:99b6 bank09:d29a R:
+7410 W:bank06:c0b9 bank06:c807 bank07:845a bank09:8f7a bank09:9a44 bank09:d306 R:
+7411 W:bank06:c0c1 bank06:c80f bank07:8463 bank09:8f82 bank09:9a4c bank09:d30e R:
+7412 W:bank06:c0c9 bank06:c817 bank07:846c bank09:8f8a bank09:9a54 bank09:d316 R:
+7413 W:bank06:c0d1 bank06:c81f bank07:a028 bank09:8f92 bank09:9a5c bank09:d31e R:
+7414 W:bank06:c0d9 bank06:c827 bank07:819a bank09:8f51 bank09:9a22 bank09:d34a R:bank06:ce0e bank07:8bfb
+7415 W:bank06:c0e1 bank06:c82f bank07:81a2 bank09:8f59 bank09:9a2a bank09:d352 R:bank06:ce06 bank07:8bf3
+7416 W:bank06:c0e9 bank06:c837 bank07:81aa bank09:8f61 bank09:9a32 bank09:d35a R:bank06:cdfe bank07:8beb
+7417 W:bank06:c0f1 bank06:c83f bank07:81b2 bank09:8f69 bank09:9a3a bank09:d362 R:bank06:cdf6 bank07:8be3
+741C W:bank06:d353 bank09:8b00 bank09:d2c8 R:
+7420 W:CODE:5382 bank03:d382 bank04:d382 bank05:d382 bank06:be3b bank07:d382 bank09:e963 bank10:d382 bank11:d382 bank12:d382 R:
+7421 W:CODE:5372 bank03:d372 bank04:d372 bank05:d372 bank06:be2e bank07:d372 bank09:e95c bank10:d372 bank11:d372 bank12:d372 R:
+7424 W:CODE:53bf bank03:d3bf bank04:d3bf bank05:d3bf bank06:be88 bank07:d3bf bank09:e982 bank10:d3bf bank11:d3bf bank12:d3bf R:
+7425 W:CODE:53b1 bank03:d3b1 bank04:d3b1 bank05:d3b1 bank06:be90 bank07:d3b1 bank09:e98a bank10:d3b1 bank11:d3b1 bank12:d3b1 R:
+7426 W:CODE:53a0 bank03:d3a0 bank04:d3a0 bank05:d3a0 bank06:be5e bank07:d3a0 bank09:e96f bank10:d3a0 bank11:d3a0 bank12:d3a0 R:
+7427 W:CODE:5392 bank03:d392 bank04:d392 bank05:d392 bank06:be66 bank07:d392 bank09:e977 bank10:d392 bank11:d392 bank12:d392 R:
+7500 W:bank05:80c7 bank05:a4c0 bank05:a4ca bank05:a4e0 R:bank05:af6d bank05:b01a
+7501 W:bank05:b571 bank05:b7c1 R:bank08:d9bd
+7502 W: R:bank05:aa4c bank05:aa8a bank05:acea bank05:b7e1 bank05:b7ee
+7503 W:bank05:80c2 bank05:9d78 bank05:a0cd bank05:b554 bank05:b561 R:bank05:a513
+7504 W:bank05:80cf R:bank05:b7f6
+7508 W:bank05:80db bank05:ae76 R:
+750A W:bank05:ae37 R:
+7510 W:bank05:8389 R:
+7511 W:bank05:8381 R:
+7512 W:bank05:8379 R:
+7513 W:bank05:8371 R:
+7514 W:bank05:8353 bank07:a72f R:
+7515 W:bank05:834b bank07:a727 R:
+7516 W:bank05:8343 bank07:a71f R:
+7517 W:bank05:833b bank07:a717 R:
+7520 W:bank05:8503 R:bank05:8db5 bank05:8eaf bank05:ae48 bank05:ae87
+7521 W:bank05:8e9a R:bank05:8eb9 bank05:92e9
+7522 W:bank05:8ea2 bank05:92dd R:
+7523 W:bank05:8eab bank05:92e5 R:bank05:92f0
+7524 W:bank05:b008 R:
+7525 W:bank05:b010 R:
+7526 W:bank05:b413 R:
+7528 W:bank05:802f bank05:803a bank05:8045 bank05:8050 bank05:805b bank05:8066 bank05:8071 bank05:807c bank05:8087 bank05:8092 bank05:809d bank05:80a8 bank05:80b3 bank05:828a bank05:82a0 bank05:82ad bank05:8332 bank05:a841 bank05:a8d5 bank05:afeb bank05:b401 bank06:895b bank06:8965 bank06:896f bank06:8979 bank06:898f bank06:89af bank06:89b7 bank06:89c1 bank06:89c9 bank06:89dc bank06:89e6 bank06:89ff bank06:8a14 bank06:8a1c bank06:8a3e bank06:8a46 bank06:8ad8 bank06:8ae0 bank06:afd8 bank06:afeb bank06:b0b2 bank06:b0d2 bank07:a733 R:bank07:a70c
+752C W:bank05:a8f0 R:
+752D W:bank05:a8f8 R:
+752E W:bank05:a900 R:
+752F W:bank05:a908 R:
+7530 W:bank05:8109 bank05:8dbf R:bank05:a84f
+7531 W: R:bank05:a857
+7532 W: R:bank05:a85f
+7533 W: R:bank05:a867
+7538 W:bank05:8cf6 R:bank05:a4fb bank05:aa3c bank05:acaf
+7539 W:bank05:8cfe R:bank05:a4f3 bank05:aa44 bank05:acb7
+753A W:bank05:8d0d R:bank05:a50b
+753B W: R:bank05:a503
+753C W:bank05:a4ff R:bank05:843e bank05:a575 bank05:aa6d bank05:accd bank05:b12c bank14:c143
+753D W:bank05:a4f7 R:bank05:8446 bank05:a57d bank05:aa79 bank05:acd9 bank05:b134
+753E W:bank05:a50f R:
+753F W:bank05:a507 R:
+7540 W:bank05:8d6d bank05:9935 bank05:9f95 R:
+7541 W:bank05:992d bank05:9f9d R:
+7542 W:bank05:8d7b bank05:9fa7 R:
+7543 W:bank05:9942 R:
+7544 W:bank05:8d8d bank05:9fc0 R:bank05:8e71
+7545 W:bank05:995b bank05:9fc8 R:bank05:8e79
+7546 W:bank05:8d9b bank05:9971 bank05:9fd5 R:bank05:8e81
+7547 W:bank05:9969 bank05:9fdd R:bank05:8e89
+7548 W:bank05:8d1f bank05:9998 bank05:9feb R:
+7549 W:bank05:9990 bank05:9ff3 R:
+754A W:bank05:8d2d bank05:99b0 bank05:9ffd R:bank05:a538
+754B W:bank05:99a8 bank05:a005 R:bank05:a540
+754C W:bank05:8d3f bank05:a010 R:bank05:92ac
+754D W:bank05:99c7 bank05:a018 R:bank05:92b4
+754E W:bank05:8d4d bank05:99dd bank05:a022 R:bank05:92bc
+754F W:bank05:99d5 bank05:a02a R:bank05:92c4
+7550 W:bank05:8259 bank05:83e2 bank05:8e62 R:
+7554 W:bank05:aeae R:
+7555 W:bank05:aea6 R:
+7556 W:bank05:ae6f R:
+7557 W:bank05:ae67 R:
+7558 W:bank05:8da9 bank05:ae9e R:
+7559 W:bank05:8db1 bank05:ae96 R:
+755A W:bank05:8d5b bank05:ae5f R:
+755B W:bank05:ae57 R:
+755C W:bank05:b6de R:
+755D W:bank05:b6e6 R:
+7594 W:bank05:83b9 bank05:b57c R:
+7595 W:bank05:b577 R:
+7596 W:bank05:8478 R:
+7599 W:bank05:847f R:
+759A W:bank05:b4bc bank05:b4fd R:
+759C W:bank05:b4b6 bank05:b4f7 R:
+759E W:bank05:b4a9 bank05:b4ec R:
+75A0 W:bank05:83a9 R:
+75A2 W:bank05:83a1 R:
+75A4 W:bank05:83af R:
+75A6 W:bank05:8035 bank05:8040 bank05:804b bank05:8056 bank05:8061 bank05:806c bank05:8077 bank05:8082 bank05:808d bank05:8098 bank05:80a3 bank05:80ae bank05:80ba bank05:829a bank05:82a8 bank05:b5d9 bank06:b0b8 bank06:b0d7 R:bank06:b004 bank06:b013 bank06:b020 bank06:b02f bank06:b03c bank06:b04b bank06:b058 bank06:b066 bank06:b073 bank06:b082 bank06:b08f bank06:b09e bank06:b0ab bank06:b0be bank06:b0cb bank06:b0dd bank06:b6c0 bank06:b6cd bank06:b6d8 bank06:b6e5 bank06:b6f0 bank06:b6fd bank06:b708 bank06:b715 bank06:b720 bank06:b72d bank06:b738 bank06:b745 bank06:b750 bank06:b75e bank06:b76b bank06:b779
+75A7 W:bank05:828f bank05:8421 bank05:84b2 bank05:a7fb bank05:a83b bank05:a846 bank06:afde bank06:aff0 R:bank06:af1d bank06:af2a bank06:af37 bank06:af44 bank06:af51 bank06:af5f bank06:af6d bank06:af7b bank06:af8a bank06:af98 bank06:afa6 bank06:afb5 bank06:afc3 bank06:afd1 bank06:afe4 bank06:aff6
+75D0 W:bank05:8ff2 R:
+75D1 W:bank05:8ffa R:
+75D2 W:bank05:93a3 R:
+75D3 W:bank05:93ab R:
+75D4 W:bank05:83d7 bank05:84d5 bank05:8e55 R:
+7600 W: R:bank03:8fe0 bank03:9c80
+7601 W:bank15:a235 R:bank03:9fdc bank03:a0bc bank15:a20c
+7602 W:bank15:a2c2 bank15:d9cc R:bank03:9cb1
+7603 W: R:bank03:a0cc bank03:a0d4
+7604 W:bank03:8f38 bank15:89c2 bank15:9b10 bank15:a2d5 bank15:c5a4 bank15:d305 R:bank15:8866 bank15:89b7 bank15:9a68 bank15:a145
+7605 W: R:bank03:a0c4 bank15:a14d
+7606 W:bank03:8443 bank03:8920 bank15:8860 bank15:89b1 bank15:9a64 bank15:a15a R:bank03:8432 bank03:9f46 bank04:a08f bank15:a135
+7607 W:bank03:891a bank03:8e49 bank03:9b23 bank15:86e2 bank15:a164 bank15:a1ce bank15:a2a9 bank15:d9d1 R:bank03:8e57 bank03:9b15 bank03:9fd5 bank03:a0a0 bank15:80fa bank15:8368 bank15:8479 bank15:8573 bank15:86d4 bank15:87a2 bank15:a13d bank15:a29b
+760A W:bank03:a04b R:
+7610 W:bank03:8211 bank15:c588 R:
+7611 W:bank03:8219 bank15:c590 R:
+7612 W:bank03:8221 bank15:c598 R:
+7613 W:bank03:8229 bank15:c5a0 R:
+7618 W: R:bank03:9b28 bank15:a18b bank15:a1bc
+7619 W: R:bank03:8b8f bank03:92f7 bank03:96e6 bank03:9734 bank03:9b4b bank03:9d0e bank03:9f90 bank15:a193
+761A W: R:bank03:8ced bank03:9ea8 bank03:a042
+761B W: R:bank03:894d bank03:8c87 bank03:9d9c bank03:9f95
+761C W: R:bank03:9ec3
+761D W: R:bank03:9e88
+761E W: R:bank03:8dbb
+761F W: R:bank03:8dac
+7620 W:bank03:8f5f bank07:a174 bank07:b4c0 bank15:a17d R:bank07:b08a
+7624 W:bank07:a138 R:
+7625 W:bank07:a140 R:
+7626 W:bank07:a148 R:
+7627 W:bank07:a150 R:
+7628 W:bank07:a158 R:
+7629 W:bank07:a160 R:
+762A W:bank07:a168 R:
+762B W:bank07:a170 R:
+7630 W:bank03:8914 bank03:920b bank03:9cb8 bank15:a16c R:bank03:86f0 bank03:91d0
+7640 W:bank15:a175 bank15:c330 bank15:d2e5 R:bank15:c2db bank15:c2e2
+7644 W:bank15:c2f4 R:
+7645 W:bank15:c2fc R:
+7646 W:bank15:c304 R:
+7647 W:bank15:c30c R:
+7648 W:bank15:c314 R:
+7649 W:bank15:c31c R:
+764A W:bank15:c324 R:
+764B W:bank15:c32c R:
+7650 W:bank15:a171 R:
+7660 W:bank15:a179 bank15:c504 R:bank15:c4b6
+7664 W:bank15:c4c8 R:
+7665 W:bank15:c4d0 R:
+7666 W:bank15:c4d8 R:
+7667 W:bank15:c4e0 R:
+7668 W:bank15:c4e8 R:
+7669 W:bank15:c4f0 R:
+766A W:bank15:c4f8 R:
+766B W:bank15:c500 R:
+766C W: R:bank15:a1de
+766D W: R:bank15:a1e6
+766E W: R:bank15:a1ee
+766F W: R:bank15:a1f6
+7670 W:bank03:8f5b bank03:91c8 R:bank03:91a9
+7680 W:bank03:8f56 bank03:9995 R:bank03:9971
+7702 W: R:bank11:b940
+7704 W:CODE:40c9 CODE:4173 bank03:c0c9 bank03:c173 bank04:c0c9 bank04:c173 bank05:c0c9 bank05:c173 bank07:c0c9 bank07:c173 bank11:c173 bank13:dfe1 bank13:e5c5 R:bank13:dfaa bank13:e632
+7705 W:CODE:40cf CODE:4179 bank03:c0cf bank03:c179 bank04:c0cf bank04:c179 bank05:c0cf bank05:c179 bank07:c0cf bank07:c179 bank11:c179 R:
+7710 W:bank07:b765 R:CODE:4d28 bank03:cd28 bank04:cd28 bank05:cd28 bank07:b6a8 bank07:cd28 bank10:cd28 bank11:cd28 bank12:cd28
+7711 W: R:CODE:4d30 bank03:cd30 bank04:cd30 bank05:cd30 bank07:cd30 bank10:cd30 bank11:cd30 bank12:cd30
+7712 W: R:CODE:4d38 bank03:cd38 bank04:cd38 bank05:cd38 bank07:cd38 bank10:cd38 bank11:bbe3 bank11:c065 bank11:cd38 bank12:cd38
+7713 W: R:CODE:4d40 bank03:cd40 bank04:cd40 bank05:cd40 bank07:cd40 bank10:cd40 bank11:cd40 bank12:cd40
+7716 W: R:bank11:bf4d
+7722 W: R:bank11:bf54
+7724 W:CODE:4d7e bank03:cd7e bank04:cd7e bank05:cd7e bank07:cd7e bank10:cd7e bank11:cd7e bank12:cd7e R:CODE:4d48 bank03:cd48 bank04:cd48 bank05:cd48 bank07:b40b bank07:cd48 bank10:cd48 bank11:cd48 bank12:cd48
+7725 W:CODE:4d86 bank03:cd86 bank04:cd86 bank05:cd86 bank07:cd86 bank10:cd86 bank11:cd86 bank12:cd86 R:CODE:4d50 bank03:cd50 bank04:cd50 bank05:cd50 bank07:cd50 bank10:cd50 bank11:cd50 bank12:cd50
+7726 W:CODE:4d8e bank03:cd8e bank04:cd8e bank05:cd8e bank07:cd8e bank10:cd8e bank11:ba26 bank11:c01f bank11:cd8e bank12:cd8e R:CODE:4d58 bank03:cd58 bank04:cd58 bank05:cd58 bank07:cd58 bank10:cd58 bank11:bf5b bank11:cd58 bank12:cd58
+7727 W:CODE:4d96 bank03:cd96 bank04:cd96 bank05:cd96 bank07:cd96 bank10:cd96 bank11:cd96 bank12:cd96 R:CODE:4d60 bank03:cd60 bank04:cd60 bank05:cd60 bank07:cd60 bank10:cd60 bank11:cd60 bank12:cd60 bank15:b281 bank15:c388
+7728 W:bank15:b2ba bank15:b312 R:bank05:b566 bank05:b7c7 bank05:b86d bank08:d9cb bank15:b2af
+7729 W: R:bank05:b803
+772C W: R:bank15:b262
+772E W: R:bank15:b26b
+772F W:bank15:b25c R:
+7730 W:bank04:91bb bank04:91ce R:
+7731 W:bank04:91ad R:
+7732 W:bank04:919b R:
+7733 W:bank04:9180 R:
+7734 W:bank04:916c R:
+7739 W: R:bank07:8545 bank14:c13b
+773A W: R:bank07:854d
+773B W: R:bank07:8555
+773C W: R:bank07:8593
+773D W: R:bank07:859b bank11:ad86 bank11:ad9f
+7740 W: R:bank15:da5b
+7742 W: R:CODE:0056 CODE:40d4 CODE:43d8 bank03:c0d4 bank03:c3d8 bank04:c0d4 bank04:c3d8 bank05:c0d4 bank05:c3d8 bank07:c0d4 bank07:c3d8 bank11:c3d8
+7751 W: R:bank05:b5cb
+7752 W: R:bank08:f119 bank11:b952
+7753 W: R:CODE:41df CODE:4241 CODE:4264 CODE:42f3 bank03:c1df bank03:c241 bank03:c264 bank03:c2f3 bank04:c1df bank04:c241 bank04:c264 bank04:c2f3 bank05:c1df bank05:c241 bank05:c264 bank05:c2f3 bank07:c1df bank07:c241 bank07:c264 bank07:c2f3 bank08:e36f bank11:c1df bank11:c241 bank11:c264 bank11:c2f3
+7755 W: R:CODE:4389 CODE:4637 bank03:c389 bank03:c637 bank04:c389 bank04:c637 bank05:c389 bank05:c637 bank07:c389 bank07:c637 bank08:e633 bank10:c637 bank11:bbec bank11:c389 bank11:c637
+7757 W: R:bank11:a293 bank11:a8a7
+7758 W: R:bank15:b2a6
+7759 W: R:bank15:b29f
+7760 W: R:CODE:411e CODE:4130 bank03:c11e bank03:c130 bank04:c11e bank04:c130 bank05:c11e bank05:c130 bank07:c11e bank07:c130 bank10:b50c bank15:939a
+7761 W:CODE:47eb bank03:c7eb bank04:c7eb bank05:c7eb bank07:c7eb bank10:c7eb bank11:c7eb R:CODE:410e CODE:413e CODE:4150 CODE:41e6 CODE:4256 CODE:42fc CODE:589d bank03:c10e bank03:c13e bank03:c150 bank03:c1e6 bank03:c256 bank03:c2fc bank03:d89d bank04:c10e bank04:c13e bank04:c150 bank04:c1e6 bank04:c256 bank04:c2fc bank04:d89d bank05:c10e bank05:c13e bank05:c150 bank05:c1e6 bank05:c256 bank05:c2fc bank05:d89d bank06:d89d bank07:c10e bank07:c13e bank07:c150 bank07:c1e6 bank07:c256 bank07:c2fc bank07:d89d bank09:f0cc bank10:d89d bank11:c150 bank11:c1e6 bank11:c256 bank11:c2fc bank11:d89d bank12:d89d bank13:e3e9 bank15:9409
+7762 W: R:CODE:40f0 CODE:415e bank03:c0f0 bank03:c15e bank04:c0f0 bank04:c15e bank05:c0f0 bank05:c15e bank07:c0f0 bank07:c15e bank11:c15e bank15:9540
+7763 W:CODE:4324 bank03:c324 bank04:c324 bank05:c324 bank07:c324 bank11:c324 R:bank10:ba94
+7764 W: R:CODE:40e2 CODE:41f4 CODE:425d CODE:43e6 bank03:c0e2 bank03:c1f4 bank03:c25d bank03:c3e6 bank04:c0e2 bank04:c1f4 bank04:c25d bank04:c3e6 bank05:c0e2 bank05:c1f4 bank05:c25d bank05:c3e6 bank07:c0e2 bank07:c1f4 bank07:c25d bank07:c3e6 bank08:f70d bank11:c1f4 bank11:c25d bank11:c3e6
+7766 W: R:CODE:40ff bank03:c0ff bank04:c0ff bank05:c0ff bank07:c0ff bank11:bbcf
+7767 W: R:bank15:d388
+7768 W: R:bank04:8b24 bank04:a453 bank05:a5ac bank05:a60d
+7769 W: R:bank04:a212 bank05:84ba bank07:b2a1
+7770 W: R:CODE:40e9 CODE:4117 CODE:4127 CODE:4137 bank03:c0e9 bank03:c117 bank03:c127 bank03:c137 bank04:c0e9 bank04:c117 bank04:c127 bank04:c137 bank05:c0e9 bank05:c117 bank05:c127 bank05:c137 bank07:c0e9 bank07:c117 bank07:c127 bank07:c137 bank08:da19 bank10:ba86
+7771 W:CODE:4207 CODE:47e5 CODE:47f4 CODE:47fd bank03:c207 bank03:c7e5 bank03:c7f4 bank03:c7fd bank04:c207 bank04:c7e5 bank04:c7f4 bank04:c7fd bank05:c207 bank05:c7e5 bank05:c7f4 bank05:c7fd bank07:c207 bank07:c7e5 bank07:c7f4 bank07:c7fd bank10:c7e5 bank10:c7f4 bank10:c7fd bank11:c207 bank11:c7e5 bank11:c7f4 bank11:c7fd R:CODE:008f CODE:0099 CODE:4145 CODE:41ed CODE:423a CODE:424f CODE:4272 CODE:42ec CODE:5896 bank03:c145 bank03:c1ed bank03:c23a bank03:c24f bank03:c272 bank03:c2ec bank03:d896 bank04:c145 bank04:c1ed bank04:c23a bank04:c24f bank04:c272 bank04:c2ec bank04:d896 bank05:c145 bank05:c1ed bank05:c23a bank05:c24f bank05:c272 bank05:c2ec bank05:d896 bank06:d896 bank07:c145 bank07:c1ed bank07:c23a bank07:c24f bank07:c272 bank07:c2ec bank07:d896 bank09:f0c5 bank10:d896 bank11:c1ed bank11:c23a bank11:c24f bank11:c272 bank11:c2ec bank11:d896 bank12:d896 bank13:e3e2
+7772 W: R:CODE:4157 bank03:c157 bank04:c157 bank05:c157 bank07:c157 bank11:c157
+7773 W:CODE:432a CODE:4334 CODE:433e bank03:c32a bank03:c334 bank03:c33e bank04:c32a bank04:c334 bank04:c33e bank05:c32a bank05:c334 bank05:c33e bank07:c32a bank07:c334 bank07:c33e bank11:c32a bank11:c334 bank11:c33e R:bank03:9c8e bank08:d660 bank08:e2fd bank08:eb6c bank08:eba5 bank10:b516 bank10:ba9b bank15:9d18 bank15:9d2f bank15:a996 bank15:a9a2 bank15:c119 bank15:c125 bank15:d1af bank15:d6c4
+7774 W: R:CODE:40db CODE:43df bank03:c0db bank03:c3df bank04:c0db bank04:c3df bank05:c0db bank05:c3df bank07:c0db bank07:c3df bank11:c3df
+7776 W: R:bank05:b341 bank05:b7cf bank11:a30c bank11:a32a
+7777 W: R:bank10:9c26 bank10:a5b0 bank15:d37c bank15:d9f9 bank15:db37
+7778 W:CODE:4349 CODE:4806 bank03:c349 bank03:c806 bank04:c349 bank04:c806 bank05:c349 bank05:c806 bank07:c349 bank07:c806 bank10:c806 bank11:c349 bank11:c806 R:bank04:85c5 bank04:85ce bank04:8620 bank04:862e bank04:a45a bank05:a5bc bank05:a606 bank08:da12 bank10:a222 bank10:b505 bank15:820a bank15:9adf bank15:cc35 bank15:db47
+7779 W: R:bank04:a20b bank05:84c1 bank05:a5eb bank05:af9f bank05:b021 bank05:b671 bank07:b2a8 bank10:8a11 bank10:a202 bank10:b01b bank15:a8cc bank15:a8d6 bank15:a973 bank15:cd4f
+7780 W: R:bank15:93a1
+7781 W: R:CODE:58a8 bank03:d8a8 bank04:d8a8 bank05:d8a8 bank06:d8a8 bank07:d8a8 bank09:f0d7 bank10:a209 bank10:d8a8 bank11:d8a8 bank12:d8a8 bank13:e3f4 bank15:9410
+7782 W: R:CODE:40f7 bank03:a06f bank03:c0f7 bank04:a096 bank04:a0a4 bank04:c0f7 bank05:c0f7 bank07:c0f7 bank08:d9ec bank15:9547 bank15:9bc7
+7786 W: R:CODE:4106 bank03:c106 bank04:c106 bank05:c106 bank07:c106 bank10:aff9
+7788 W: R:bank15:d762
+7789 W: R:bank04:a224
+77A0 W:CODE:0141 CODE:439f bank03:c39f bank04:a030 bank04:a143 bank04:a234 bank04:a5ed bank04:c39f bank05:c39f bank07:c39f bank11:bae2 bank11:c39f R:bank04:a243
+77A1 W:CODE:0147 CODE:43a5 bank03:c3a5 bank04:c3a5 bank05:c3a5 bank07:c3a5 bank11:c3a5 R:bank04:a03d
+77A3 W:bank04:a038 bank04:a052 bank04:a23e R:bank11:bad9 bank11:baec
+77B0 W:CODE:0135 CODE:41d9 CODE:4248 CODE:4393 bank03:c1d9 bank03:c248 bank03:c393 bank04:c1d9 bank04:c248 bank04:c393 bank05:c1d9 bank05:c248 bank05:c393 bank07:c1d9 bank07:c248 bank07:c393 bank11:c1d9 bank11:c248 bank11:c393 R:bank04:97a4 bank06:ac4d bank06:b51e
+77B1 W:CODE:013b CODE:4399 bank03:c399 bank04:a046 bank04:a5bb bank04:c399 bank05:c399 bank07:c399 bank11:c399 R:
+77B2 W:bank11:a2cd R:
+77B6 W: R:bank05:8cdd
+77B7 W:bank05:b19e R:
+77B8 W:bank11:b95b R:
+77B9 W:CODE:005d CODE:43ef bank03:c3ef bank04:c3ef bank05:c3ef bank07:c3ef bank11:c3ef R:bank10:897e
+77BA W:bank02:fc7a bank05:b5c2 R:
+77BC W: R:CODE:43ab bank03:c3ab bank04:9b74 bank04:9b80 bank04:9b8c bank04:9c88 bank04:9c93 bank04:9c9e bank04:9f49 bank04:9f54 bank04:a157 bank04:a40f bank04:c3ab bank05:b5b9 bank05:c3ab bank06:ac44 bank06:b515 bank07:c3ab bank11:c3ab
+77BD W: R:bank04:9b5f bank04:9c67 bank04:9c72 bank04:9c7d bank04:9f28 bank04:9f33 bank04:9f3e bank05:83fb bank05:8412 bank05:8508 bank05:8ccd bank05:af80 bank05:b049 bank09:c1ec bank11:b949 bank11:bafc bank13:a775
+77BE W: R:bank04:a05a bank05:83f4 bank05:840b bank05:af88 bank05:af97 bank05:b02b bank05:b038 bank11:baf3
+77BF W: R:bank04:97e2 bank04:97f3 bank04:9804 bank04:9815 bank04:9826 bank04:9c24 bank04:9c2f bank04:9c3a bank04:9c45 bank04:9c50 bank05:8cc6 bank07:8000 bank07:8385 bank07:9f69 bank07:a380 bank07:a3e1
+77C0 W:bank11:a2c5 R:
+77C2 W:CODE:41d3 CODE:436b bank03:c1d3 bank03:c36b bank04:9bfb bank04:9c08 bank04:c1d3 bank04:c36b bank05:c1d3 bank05:c36b bank07:c1d3 bank07:c36b bank09:f31f bank11:c1d3 bank11:c36b bank13:e6e2 R:
+77C3 W:bank04:9bdc bank09:f28a R:
+77D0 W:bank11:bf77 R:
+77D8 W:bank11:b99e R:
+77D9 W:bank11:b9a6 R:
+77DA W:bank11:b9ae R:
+77DB W:bank11:b994 R:bank11:c0a8 bank11:c0b0 bank15:cc3c
+77E4 W:CODE:014d R:bank10:b5e4
+77F0 W:bank09:87ed R:bank10:c304
+77F2 W: R:bank09:f04c bank13:c41b bank13:e2f8 bank13:e69a
+77FD W: R:bank04:9c5b
+7842 W:bank11:bc0f R:
+7843 W:bank11:c050 bank11:c05c bank11:c06f bank11:c079 R:bank11:ba1e
+7844 W:bank11:c0d0 bank11:c0d7 R:bank11:c0b8 bank11:c0c0 bank11:c0c8
+7880 W:CODE:4201 CODE:4234 CODE:42e6 bank03:c201 bank03:c234 bank03:c2e6 bank04:c201 bank04:c234 bank04:c2e6 bank05:c201 bank05:c234 bank05:c2e6 bank07:c201 bank07:c234 bank07:c2e6 bank11:c201 bank11:c234 bank11:c2e6 R:CODE:426b bank03:c26b bank04:c26b bank05:c26b bank07:c26b bank08:f714 bank11:c26b
+7881 W: R:CODE:428b CODE:42a9 CODE:42c3 CODE:5705 bank03:c28b bank03:c2a9 bank03:c2c3 bank03:d705 bank04:c28b bank04:c2a9 bank04:c2c3 bank04:d705 bank05:c28b bank05:c2a9 bank05:c2c3 bank05:d705 bank06:d705 bank07:c28b bank07:c2a9 bank07:c2c3 bank07:d705 bank08:e5e4 bank08:e912 bank08:e93f bank08:ed42 bank08:f6ce bank10:d705 bank11:c28b bank11:c2a9 bank11:c2c3 bank11:d705 bank12:d705
+7882 W:CODE:4279 CODE:42a3 CODE:42bd CODE:5701 CODE:571c bank03:c279 bank03:c2a3 bank03:c2bd bank03:d701 bank03:d71c bank04:c279 bank04:c2a3 bank04:c2bd bank04:d701 bank04:d71c bank05:c279 bank05:c2a3 bank05:c2bd bank05:d701 bank05:d71c bank06:d701 bank06:d71c bank07:c279 bank07:c2a3 bank07:c2bd bank07:d701 bank07:d71c bank08:dce5 bank08:dced bank08:de15 bank08:de1d bank08:de3c bank08:e385 bank08:e5af bank08:e5b7 bank08:e5bf bank08:e5df bank08:e8ff bank08:e907 bank08:e93a bank08:ed3d bank08:efce bank08:efd6 bank08:efde bank08:f00a bank08:f012 bank08:f01a bank10:d701 bank10:d71c bank11:c279 bank11:c2a3 bank11:c2bd bank11:d701 bank11:d71c bank12:d701 bank12:d71c bank13:86c0 bank13:86d2 bank13:86e0 R:bank08:e946
+7883 W:CODE:41fb CODE:422e CODE:42e0 bank03:c1fb bank03:c22e bank03:c2e0 bank04:c1fb bank04:c22e bank04:c2e0 bank05:c1fb bank05:c22e bank05:c2e0 bank07:c1fb bank07:c22e bank07:c2e0 bank11:c1fb bank11:c22e bank11:c2e0 R:
+7884 W:bank08:e36b R:
+78A0 W:CODE:4224 bank03:c224 bank04:c224 bank05:c224 bank07:c224 bank11:c224 R:
+78A4 W:CODE:420d bank03:c20d bank04:c20d bank05:c20d bank07:c20d bank11:c20d R:
+7900 W:bank11:a314 bank11:b9bd bank11:b9ef bank11:bb10 bank11:bb32 bank11:bc7b bank11:bc99 bank11:c005 bank11:c039 bank11:c046 bank13:e604 bank13:e618 R:
+7901 W: R:bank11:bf06
+7902 W:bank11:a324 bank11:a909 bank11:bb29 bank11:bc76 bank11:bc9e R:
+7903 W:bank11:9ff4 R:bank11:bf0d
+7904 W:bank11:9ffd bank11:a914 R:
+7908 W:bank11:a2eb R:
+7910 W:bank11:a081 bank11:a944 bank11:bcdc R:
+7911 W:bank11:a089 bank11:a94c bank11:bce4 R:
+7912 W:bank11:a091 bank11:a954 bank11:bcec R:
+7913 W:bank11:a222 R:
+7914 W:bank11:a249 R:
+7915 W:bank11:a252 R:
+7916 W:bank11:a25b R:
+7917 W:bank11:a264 R:
+7918 W: R:bank11:b454
+7919 W: R:bank11:b45c
+791A W: R:bank11:b464
+791B W: R:bank11:b46c
+7920 W:bank11:a02b R:
+7924 W:bank11:a03f R:
+7925 W:bank11:a048 R:
+7926 W:bank11:a051 R:
+7927 W: R:bank11:a05c
+7928 W: R:bank07:b43b bank11:b648 bank11:ba69 bank13:c005 bank13:cb08
+7929 W: R:bank07:b443 bank11:b650 bank11:ba71 bank13:c00d bank13:cb10
+792A W: R:bank07:b44b bank11:b658 bank11:ba79 bank13:c015 bank13:cb18
+792B W: R:bank07:b453 bank11:b660 bank11:ba81 bank13:c01d bank13:cb20
+7931 W:bank11:a0a9 bank11:a960 R:
+7933 W:bank11:a0ad bank11:a965 R:
+7934 W:bank11:bd32 R:
+793C W:bank11:bd5a R:
+7943 W:bank11:bd61 R:
+7944 W:bank11:a00c bank11:a923 R:
+7954 W:bank11:a268 R:
+7980 W:bank11:a2f9 R:
+7990 W:bank11:a275 R:
+7993 W:bank11:a29a R:
+79BD W:bank11:bd65 R:
+79C6 W:bank11:bd55 R:
+79D0 W:bank11:9fd5 bank11:bd4f R:bank11:bfb9
+79D1 W:bank11:9fcf R:
+79D2 W:bank11:9fdb bank11:a28d bank11:a8a1 R:
+79DC W:bank11:bd49 R:bank11:bf14
+79DD W:bank11:bd6a R:
+7C00 W:bank07:a88b bank07:a898 bank09:86a1 bank09:86a8 bank09:ccb4 bank09:cf10 bank09:d466 bank09:d478 bank09:de6c bank09:de7a bank09:df14 bank09:df21 R:bank07:853b
+7C04 W: R:bank07:8531 bank07:a891 bank09:ccad bank09:cf09 bank09:d471 bank09:de73 bank09:df1a
+7C08 W:bank07:a801 bank09:cbb4 bank09:ce25 bank09:d3a6 bank09:de8a R:
+7C09 W:bank07:a809 bank09:cbbe bank09:ce2d bank09:d3ae bank09:de92 R:
+7C0A W:bank07:a811 bank09:cbc8 bank09:ce35 bank09:d3b6 bank09:de9a R:
+7C0B W:bank07:a819 bank09:83d7 bank09:dea2 R:
+7C0C W:bank07:a821 bank09:8650 bank09:cbdc bank09:de68 bank09:deaa R:
+7C0D W:bank07:a829 bank09:cbe4 bank09:d3d0 bank09:deb2 R:
+7C0E W:bank09:de5e R:
+7C0F W:bank09:cbfa bank09:d3e6 R:
+7C10 W:bank09:de41 R:
+7C14 W:bank09:8404 R:
+7C16 W:bank09:869a R:
+7C18 W:bank07:a838 bank09:cc0b bank09:ce5b bank09:d3f0 bank09:dde0 bank09:dec1 R:
+7C19 W:bank07:a840 bank09:826c bank09:d3f9 bank09:dde8 bank09:dec9 R:
+7C1A W:bank07:a848 bank09:cc15 bank09:ce65 bank09:ddf0 bank09:ded1 R:
+7C1B W:bank07:a850 bank09:8584 bank09:ddf8 bank09:ded9 R:
+7C1C W:bank07:a858 bank09:cc67 bank09:ceb7 bank09:d421 bank09:de00 bank09:dee1 R:
+7C1D W:bank07:a860 bank09:cc6f bank09:cebf bank09:d429 bank09:de09 bank09:dee9 R:
+7C1E W:bank07:a868 bank09:cc77 bank09:cec7 bank09:d431 bank09:de12 bank09:def1 R:
+7C1F W:bank07:a870 bank09:82e2 bank09:cecf bank09:d439 bank09:def9 R:
+7C20 W:bank07:a878 bank09:84b4 bank09:df01 R:
+7C21 W:bank07:a880 bank09:840d bank09:de28 bank09:df09 R:
+7E00 W:CODE:440b CODE:44a8 CODE:4559 CODE:45e0 bank03:c40b bank03:c4a8 bank03:c559 bank03:c5e0 bank04:c40b bank04:c4a8 bank04:c559 bank04:c5e0 bank05:c40b bank05:c4a8 bank05:c559 bank05:c5e0 bank07:c40b bank07:c4a8 bank07:c559 bank07:c5e0 bank09:9e87 bank09:c0c2 bank09:d4f7 bank10:c559 bank10:c5e0 bank11:c40b bank11:c4a8 bank11:c559 bank11:c5e0 bank13:9b22 bank13:9eb7 bank13:a5d2 bank13:a63f R:CODE:4724 bank03:c724 bank04:c724 bank05:c724 bank07:c724 bank10:c724 bank11:c724
+7E01 W:bank09:9e8f bank09:c0ca bank09:d4ff bank13:9b2a bank13:9ebf bank13:a5da bank13:a647 R:
+7E02 W:bank09:9e97 bank09:c0d2 bank09:d507 bank13:9b32 bank13:9ec7 bank13:a5e2 bank13:a64f R:
+7E03 W:bank09:9e9f bank09:c0da bank09:d50f bank13:a5ea bank13:a657 bank13:a6d8 R:
+7E04 W:CODE:4419 CODE:4496 CODE:4541 CODE:45d4 bank03:c419 bank03:c496 bank03:c541 bank03:c5d4 bank04:c419 bank04:c496 bank04:c541 bank04:c5d4 bank05:c419 bank05:c496 bank05:c541 bank05:c5d4 bank07:c419 bank07:c496 bank07:c541 bank07:c5d4 bank09:9ea7 bank09:d517 bank10:c541 bank10:c5d4 bank11:c419 bank11:c496 bank11:c541 bank11:c5d4 R:
+7E05 W:bank09:9eaf bank09:d51f R:
+7E06 W:bank09:c151 R:
+7E07 W:CODE:4353 bank03:c353 bank04:c353 bank05:c353 bank07:c353 bank09:dce8 bank11:c353 bank13:c6c0 bank13:e303 R:
+7E0A W:CODE:4591 CODE:462b bank03:c591 bank03:c62b bank04:c591 bank04:c62b bank05:c591 bank05:c62b bank07:c591 bank07:c62b bank09:9e26 bank10:c591 bank10:c62b bank11:c591 bank11:c62b bank13:a712 R:CODE:4462 CODE:44f6 CODE:457a CODE:4614 bank03:c462 bank03:c4f6 bank03:c57a bank03:c614 bank04:c462 bank04:c4f6 bank04:c57a bank04:c614 bank05:c462 bank05:c4f6 bank05:c57a bank05:c614 bank07:c462 bank07:c4f6 bank07:c57a bank07:c614 bank09:9f3a bank09:9f98 bank09:c10a bank09:c936 bank09:c99b bank09:e3ca bank09:e407 bank09:e448 bank09:e484 bank10:c57a bank10:c614 bank11:c462 bank11:c4f6 bank11:c57a bank11:c614 bank13:9608 bank13:9633 bank13:9b57 bank13:9b82 bank13:9f18 bank13:9f43 bank13:ac48 bank13:ac73 bank13:d702 bank13:d72d bank13:d7da bank13:d805
+7E30 W:bank09:f157 bank13:c46c bank13:ced5 bank13:e49c R:
+7E31 W:bank09:c145 bank09:c17f bank13:9f07 bank13:a622 bank13:c4a5 bank13:ded0 bank13:e41b R:bank13:c4c3
+7E32 W:bank09:c12a bank09:c159 bank09:e9ac bank13:a5f5 bank13:a662 bank13:a6e8 R:
+7E33 W:bank09:c161 R:
+7E34 W:bank09:c0fa bank09:c149 bank09:c1f6 bank09:dcbe bank09:e23e bank09:e24c bank09:f0fe bank13:a5c8 bank13:a635 bank13:a6d0 bank13:a76a bank13:d66c R:
+7E38 W:bank09:9eda bank09:9ef7 bank09:c0b6 bank09:c17b bank09:d54a bank09:d567 bank13:9a90 bank13:9eeb bank13:9f92 bank13:a61c bank13:a6ac bank13:c4a1 bank13:deb1 bank13:dec7 bank13:e416 R:bank09:dbeb bank13:d624
+7E39 W:bank09:9ee2 bank09:9eff bank09:c0b2 bank09:d552 bank09:d56f bank09:dbd0 bank13:9a98 bank13:9ef3 bank13:a617 bank13:a6a7 bank13:c49d bank13:d65a R:bank09:c214 bank09:dbf3 bank13:d62c
+7E3A W:bank09:9eea bank09:9f07 bank09:c0ae bank09:c0f0 bank09:d55a bank09:d577 bank09:dbc8 bank09:eef3 bank13:9aa0 bank13:9efb bank13:a611 bank13:a67e bank13:a6a1 bank13:a6fd bank13:c499 bank13:d652 R:bank09:dbfb bank09:ef18 bank13:d634
+7E3B W:bank09:9f0f bank09:c0a9 bank09:c0e8 bank09:c19d bank09:d57f bank09:dbc0 bank13:9aa8 bank13:9f03 bank13:a60c bank13:a679 bank13:a69c bank13:a6f7 bank13:c494 bank13:d649 R:bank09:dc03 bank09:ef10 bank13:d672
+7E3C W:bank09:9ec9 bank09:c0a5 bank09:c0e0 bank09:d539 bank13:9a86 bank13:9ee1 bank13:a606 bank13:a675 bank13:a698 bank13:a6f1 bank13:c48e R:
+7E40 W:bank09:9ebd bank09:c1d5 bank09:d52d bank13:9b40 bank13:9ed5 bank13:a5fe bank13:a66b R:
+7E41 W:bank09:9ec5 bank09:d535 bank13:9b48 bank13:9edd R:
+7E42 W:bank13:c4d4 bank13:cf2b R:
+7E44 W:bank09:9e14 bank09:ef55 bank13:a739 R:bank09:c102 bank09:c133 bank09:c1b0 bank09:ef2c bank13:9617 bank13:9642 bank13:965f bank13:9671 bank13:9b66 bank13:9b91 bank13:9ba7 bank13:9f74 bank13:9fae bank13:a6b9 bank13:a730 bank13:ac57 bank13:ac82 bank13:ac9f bank13:d711 bank13:d73c bank13:d752 bank13:d7e9 bank13:d814 bank13:d82a bank13:e067 bank13:e06f
+7E45 W:bank09:9e1c R:bank09:c9b8 bank13:9f27 bank13:9f52 bank13:9f68
+7E46 W:bank09:f05d R:
+7E50 W:CODE:4359 bank03:c359 bank04:c359 bank05:c359 bank07:c359 bank11:c359 R:
+7E51 W:CODE:4371 CODE:43fc CODE:4474 CODE:451f CODE:45a9 CODE:4644 bank03:c371 bank03:c3fc bank03:c474 bank03:c51f bank03:c5a9 bank03:c644 bank04:c371 bank04:c3fc bank04:c474 bank04:c51f bank04:c5a9 bank04:c644 bank05:c371 bank05:c3fc bank05:c474 bank05:c51f bank05:c5a9 bank05:c644 bank07:c371 bank07:c3fc bank07:c474 bank07:c51f bank07:c5a9 bank07:c644 bank10:c5a9 bank10:c644 bank11:c371 bank11:c3fc bank11:c474 bank11:c51f bank11:c5a9 bank11:c644 R:
+7E52 W:CODE:443b CODE:44c9 CODE:464a CODE:465d bank03:c43b bank03:c4c9 bank03:c64a bank03:c65d bank04:c43b bank04:c4c9 bank04:c64a bank04:c65d bank05:c43b bank05:c4c9 bank05:c64a bank05:c65d bank07:c43b bank07:c4c9 bank07:c64a bank07:c65d bank10:c64a bank10:c65d bank11:c43b bank11:c4c9 bank11:c64a bank11:c65d R:
+7E53 W:CODE:44b6 CODE:4503 CODE:45ef bank03:c4b6 bank03:c503 bank03:c5ef bank04:c4b6 bank04:c503 bank04:c5ef bank05:c4b6 bank05:c503 bank05:c5ef bank07:c4b6 bank07:c503 bank07:c5ef bank10:c5ef bank11:c4b6 bank11:c503 bank11:c5ef R:
+7E59 W:CODE:44cf CODE:4663 bank03:c4cf bank03:c663 bank04:c4cf bank04:c663 bank05:c4cf bank05:c663 bank07:c4cf bank07:c663 bank10:c663 bank11:c4cf bank11:c663 R:
+7E5C W:CODE:4441 CODE:44d5 CODE:4650 bank03:c441 bank03:c4d5 bank03:c650 bank04:c441 bank04:c4d5 bank04:c650 bank05:c441 bank05:c4d5 bank05:c650 bank07:c441 bank07:c4d5 bank07:c650 bank10:c650 bank11:c441 bank11:c4d5 bank11:c650 R:
+7E5D W:CODE:4456 CODE:44ea CODE:4568 CODE:4602 bank03:c456 bank03:c4ea bank03:c568 bank03:c602 bank04:c456 bank04:c4ea bank04:c568 bank04:c602 bank05:c456 bank05:c4ea bank05:c568 bank05:c602 bank07:c456 bank07:c4ea bank07:c568 bank07:c602 bank10:c568 bank10:c602 bank11:c456 bank11:c4ea bank11:c568 bank11:c602 R:
+7E5E W:CODE:4383 bank03:c383 bank04:c383 bank05:c383 bank07:c383 bank11:c383 R:
+7E5F W:CODE:437d CODE:456e CODE:4608 bank03:c37d bank03:c56e bank03:c608 bank04:c37d bank04:c56e bank04:c608 bank05:c37d bank05:c56e bank05:c608 bank07:c37d bank07:c56e bank07:c608 bank10:c56e bank10:c608 bank11:c37d bank11:c56e bank11:c608 R:CODE:444d CODE:44e1 bank03:c44d bank03:c4e1 bank04:c44d bank04:c4e1 bank05:c44d bank05:c4e1 bank07:c44d bank07:c4e1 bank11:c44d bank11:c4e1
+7E60 W:CODE:4490 CODE:4550 CODE:45cb bank03:c490 bank03:c550 bank03:c5cb bank04:c490 bank04:c550 bank04:c5cb bank05:c490 bank05:c550 bank05:c5cb bank07:c490 bank07:c550 bank07:c5cb bank10:c550 bank10:c5cb bank11:c490 bank11:c550 bank11:c5cb R:
+7E64 W:CODE:4377 CODE:453b CODE:45c5 bank03:c377 bank03:c53b bank03:c5c5 bank04:c377 bank04:c53b bank04:c5c5 bank05:c377 bank05:c53b bank05:c5c5 bank07:c377 bank07:c53b bank07:c5c5 bank10:c53b bank10:c5c5 bank11:c377 bank11:c53b bank11:c5c5 R:
+7E65 W:CODE:4574 CODE:460e bank03:c574 bank03:c60e bank04:c574 bank04:c60e bank05:c574 bank05:c60e bank07:c574 bank07:c60e bank10:c574 bank10:c60e bank11:c574 bank11:c60e R:
+7E66 W:CODE:4365 bank03:c365 bank04:c365 bank05:c365 bank07:c365 bank11:c365 R:
+7E80 W:CODE:435f CODE:43f6 CODE:446f CODE:4513 CODE:4597 CODE:459d CODE:4631 CODE:463e bank03:c35f bank03:c3f6 bank03:c46f bank03:c513 bank03:c597 bank03:c59d bank03:c631 bank03:c63e bank04:c35f bank04:c3f6 bank04:c46f bank04:c513 bank04:c597 bank04:c59d bank04:c631 bank04:c63e bank05:c35f bank05:c3f6 bank05:c46f bank05:c513 bank05:c597 bank05:c59d bank05:c631 bank05:c63e bank07:c35f bank07:c3f6 bank07:c46f bank07:c513 bank07:c597 bank07:c59d bank07:c631 bank07:c63e bank10:c597 bank10:c59d bank10:c631 bank10:c63e bank11:c35f bank11:c3f6 bank11:c46f bank11:c513 bank11:c597 bank11:c59d bank11:c631 bank11:c63e R:CODE:4684 CODE:4693 CODE:46bd bank03:c684 bank03:c693 bank03:c6bd bank04:c684 bank04:c693 bank04:c6bd bank05:c684 bank05:c693 bank05:c6bd bank07:c684 bank07:c693 bank07:c6bd bank10:c684 bank10:c693 bank10:c6bd bank11:c684 bank11:c693 bank11:c6bd
+7E81 W:CODE:4519 CODE:45a3 bank03:c519 bank03:c5a3 bank04:c519 bank04:c5a3 bank05:c519 bank05:c5a3 bank07:c519 bank07:c5a3 bank10:c5a3 bank11:c519 bank11:c5a3 R:CODE:469f bank03:c69f bank04:c69f bank05:c69f bank07:c69f bank10:c69f bank11:c69f
+7E90 W: R:CODE:47b9 bank03:c7b9 bank04:c7b9 bank05:c7b9 bank07:c7b9 bank10:c7b9 bank11:c7b9
+7E92 W: R:CODE:46eb bank03:c6eb bank04:c6eb bank05:c6eb bank07:c6eb bank10:c6eb bank11:c6eb

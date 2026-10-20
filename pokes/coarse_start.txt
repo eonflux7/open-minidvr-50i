@@ -1,0 +1,13 @@
+# Tearing test on the CHIP firmware (peek6: no end-of-field wait, no edge fix). Same as PICT0034/35 (which had no
+# tearing) except the rate control is NOT forced to the finest level at record start: stock start at level 5, ramping
+# to 9 over ~4 s. If the tearing band comes back in the first seconds, quality (= compressor speed) is the cause.
+boot write 6BEC 01           # field gate: both fields (50i)
+rec write 7204 08            # capture H start 8 B (pixel 4), H end 0x587
+rec write 7205 00
+rec write 7208 87
+rec write 7209 05
+rec write 2D23 0008
+rec write 2D27 0587
+field peek 720D 1   st720D
+field peek 56E6 1   qlevel
+field peek 7284 4   cap7284

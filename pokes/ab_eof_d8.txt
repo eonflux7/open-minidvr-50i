@@ -1,0 +1,11 @@
+# A/B in one session (50i): recording 1 = JPEG start waits for end of field (6BEE = FF), recording 2 = fixed wait 8,
+# recording 3 = FF again, ... (rec xor toggles). Each file's log header shows the value used ("delay jpeg start").
+boot write 6BEC 01           # field gate: both fields (50i)
+boot write 6BEE 08
+rec xor 6BEE F7              # 08 <-> FF on every recording
+boot write 6BED 34           # log events 2 (capture done), 4 (JPEG done), 5 (JPEG start)
+field peek 5229 4   tick
+field peek 720D 1   st720D
+field peek 1EE1 1   frames
+field peek 5674 2   bufidx
+field peek 1EDC 3   1EDC

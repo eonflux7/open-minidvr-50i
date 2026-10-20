@@ -1,0 +1,3 @@
+00000000:001defff code
+001df000:001dffff settings
+001e0000:001fffff tail

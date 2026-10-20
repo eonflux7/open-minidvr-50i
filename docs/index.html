@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mini DVR Patcher</title>
+<style>
+  :root {
+    --bg: #f7f7f5; --card: #ffffff; --text: #1d1d1b; --muted: #5d5d58; --line: #deded8;
+    --accent: #2457c5; --accent-text: #ffffff; --ok: #1e7a3c; --err: #b3261e; --warn-bg: #fff6dc; --warn-line: #e9cf7a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161615; --card: #1f1f1d; --text: #ecece8; --muted: #a5a59e; --line: #34342f;
+      --accent: #7aa2ff; --accent-text: #0d1430; --ok: #6fd18e; --err: #ff8a80; --warn-bg: #2d2717; --warn-line: #6b5a26;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #161615; --card: #1f1f1d; --text: #ecece8; --muted: #a5a59e; --line: #34342f;
+    --accent: #7aa2ff; --accent-text: #0d1430; --ok: #6fd18e; --err: #ff8a80; --warn-bg: #2d2717; --warn-line: #6b5a26;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.7rem; margin: 0 0 4px; }
+  h2 { font-size: 1.1rem; margin: 0 0 8px; }
+  p { margin: 0 0 12px; }
+  .sub { color: var(--muted); margin-bottom: 24px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+  .step { display: flex; gap: 14px; }
+  .num { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--accent-text);
+         display: grid; place-items: center; font-weight: 700; font-size: .9rem; }
+  .step > div { min-width: 0; flex: 1; }
+  .drop { border: 2px dashed var(--line); border-radius: 10px; padding: 22px; text-align: center; cursor: pointer;
+          color: var(--muted); }
+  .drop.over { border-color: var(--accent); color: var(--text); }
+  input[type=file] { display: none; }
+  button, .btn { display: inline-block; background: var(--accent); color: var(--accent-text); border: 0; border-radius: 8px;
+                 padding: 10px 16px; font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; }
+  button:disabled { opacity: .45; cursor: default; }
+  .status { margin-top: 12px; font-weight: 600; }
+  .status.ok { color: var(--ok); } .status.err { color: var(--err); }
+  .warn { background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
+  code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .92em; overflow-wrap: anywhere; }
+  ul, ol { margin: 0 0 12px; padding-left: 22px; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Mini DVR patcher</h1>
+  <p class="sub">Better video and audio for the Eachine ProDVR / HMDVR-class mini DVR. It runs from the SD card, so nothing
+    is written to the DVR's chip and a power cycle always brings back the stock firmware.</p>
+
+  <div class="warn"><strong>Only for this firmware:</strong> Eachine ProDVR <code>CRESFW.BIN</code> (September 2016,
+    version 2015.05.26.01.IR). The page checks every byte it changes. If your file is different, it refuses and nothing is made.
+    Everything runs in your browser and your file is never uploaded.</div>
+
+  <div class="card step"><span class="num">1</span><div>
+    <h2>Get the vendor firmware</h2>
+    <p>Download the official ProDVR firmware from Eachine
+      (<a href="https://drive.google.com/uc?export=download&amp;id=0Byt2NbI2R7eZVDdERF91aWxlTlE">Google Drive link</a>)
+      and unzip it. You need the file <code>CRESFW.BIN</code>. A full 2 MB flash dump of the DVR also works.</p>
+  </div></div>
+
+  <div class="card step"><span class="num">2</span><div>
+    <h2>Make ADJUST.BIN</h2>
+    <label class="drop" id="drop" for="file">Drop <code>CRESFW.BIN</code> here, or click to choose it</label>
+    <input type="file" id="file">
+    <div class="status" id="status" role="status"></div>
+    <p style="margin-top:12px"><button id="save" disabled>Download ADJUST.BIN</button></p>
+  </div></div>
+
+  <div class="card step"><span class="num">3</span><div>
+    <h2>Get the settings file</h2>
+    <p>The settings file switches on 50 fields per second, centres the picture, uses the finest quality from the start
+      and sets the 31 kHz audio clock.</p>
+    <p><button id="upoke">Download UPOKE.BIN</button></p>
+  </div></div>
+
+  <div class="card step"><span class="num">4</span><div>
+    <h2>Use it</h2>
+    <ol>
+      <li>Copy <strong>both</strong> <code>ADJUST.BIN</code> and <code>UPOKE.BIN</code> to the <strong>root</strong> of the
+        DVR's microSD card (not into a folder).</li>
+      <li>Put the card in the DVR and switch it on. It starts a little slower than usual, because it's loading the file.</li>
+      <li>Record as usual in <strong>D1</strong> mode.</li>
+      <li>The DVR deletes <code>ADJUST.BIN</code> while loading it, so <strong>copy it again before every power-on</strong>.
+        <code>UPOKE.BIN</code> stays on the card. If you switch on without ADJUST.BIN, the DVR simply runs its normal firmware.</li>
+      <li>Convert the recordings on a PC: install Python 3, ffmpeg and numpy, then drag an <code>.AVI</code> onto
+        <code>tools/convert.bat</code> from the project's repository (see its README). The raw files contain one field
+        per frame and look squashed until converted.</li>
+    </ol>
+  </div></div>
+</main>
+
+<script id="patch" type="application/json">{"name":"minidvr release 1 (poke hook v6, 704x288 D1, 31 kHz audio header)","ram_size":2097152,"cresfw_size":1700506,"patches":[[6863,"b26e","da00"],[6869,"b222","da03"],[6875,"9e43","da06"],[6881,"b6e8","da09"],[19895,"30e003","000000"],[131556,"1066","da00"],[154112,"00000000000000000000000000","bb0107ba6b04b9f00122021066"],[169179,"0d","04"],[169452,"d0","c0"],[169457,"e0","20"],[169497,"d0","40"],[173798,"0d","04"],[196691,"20","10"],[196706,"58","80"],[197127,"20","10"],[197142,"58","80"],[236248,"82b5","da0c"],[236344,"82b5","da0c"],[252416,"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","02da0f02da4802da1802da2102da2a75f00112dad002b26e75f00312dad0029e4375f00412dad002b6e8c0e075f00512dad0906bee12da3dd0e00282b5e06007ff7e00defedffa2290720de0ff906bece06009146016ef30e0128004ef20e00c75f00612dad0906bef02da3d75f00212dad012da7e906beb12da3d02b222906a00e0b4504aa3e0b44b457a6a7b04eab46b06ebb4c00050378a838b82e06030fca3e0fda3e0fea3e0f8a3aa83ab82ec30e3dc8d838e82c4540f600b14600c1470cde058f080c8e8f080c4e048f080bf2274e425f0f58275836be004f0906bede06009aef003defd20e00122906be0e0b45af8a3e0fab4810040f0a3e0fba3e02bfdea340040e4feb4ff05ed240f40db906be1eef0a3edf0906be4e004f0f9c0a8c2af907008e0c0e0a3e0c0e0a3e0c0e0a3e0c0e090700874faf0a3e4f0a374faf0a3e4f090814ae0b44a6ba3e0b455668a838b8274a045f0f0a3e9f0a3e58cf0a3e58af0a3e5cdf0a3e5ccf0a3aa83ab827c6a7d04ecb46b06edb4c00050378c838d82e06030f9a3e0fea3e0ffa3e0f8a3ac83ad82e954f4b434dae860d78e838f82e0a3ae83af828a838b82f0a3aa83ab82d8ea80bf90700bd0e0f090700ad0e0f0907009d0e0f0907008d0e0f0d0a822"],[330366,"a517","da00"],[350720,"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","906be07f10e4f0a3dffc120ceeef607b906bff745af0e0b45a7174a5f0e0b4a56a906a00e4f078f07c6b7ada79f112ba7a7b017a6b79f0120e3eef604ec0a8c2af907008e0c0e0a3e0c0e090700874fff0a3e4f07afe7b007c6a7d007e027f008a838b82e0a3aa83ab828c838d82f0a3ac83ad82dfeadee8907009d0e0f0907008d0e0f0d0a87f0112da8e02a517906a00e0b4505ba3e0b44b56a3e0b43051a3e0b4314c7a6a7b04ea646b7006ebc394c0503d8a838b82e06036fca3e0fda3e0fea3e0f8eb2404fbea3400faec5f60d88d838e82ecc4540f600814600914600b80c6e8f080c2e048f080bde058f080b82255504f4b4520202042494e"],[361571,"807e3e","307ef2"],[362349,"407e1f","187e79"],[364597,"407e1f","187e79"],[442883,"7f0122","02e800"],[452608,"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","7f0212e82412e8777f0122906a00e064507010a3e0644b700aa3e064307004a3e064312212e80b704c7a6a7b04ea646b7006ebc394c0503d8a838b82e06036fca3e0fda3e0fea3e0f8eb2404fbea3400faec5f60d88d838e82ecc4540f600814600914600b80c6e8f080c2e048f080bde058f080b8222278e075836b8882e0f9e824e0f582e9f008b8f0ee906be0e4f012e80b70e17e007f06906a04e583b46b07e582b4c0005019e06016fda3a3a3e0a3cd54f4b434e50eef2dff50df7e008000906be3eff0a3e4f0c0a8c2af907008e0c0e0a3e0c0e0a3e0c0e0a3e0c0e090700874faf0a3e4f0a374faf0a3e4f090814ae0b44a11a3e0b4550ca3e0b44e07a3e0b44b02800302e9ba7c6a7d04ecb46b06edb4c00050278c838d82e06020f9a3e0faa3e0fba3e0f8a3ac83ad82e954f2b442daea4480f5838b82e8f080cfee700302e9ba9081607450f0a3744cf0a37447f0a37432f0a3eff0a3eef0a3aa83ab827c6b7dc078108c838d82e0a3ac83ad828a838b82f0a3aa83ab82d8ea7c6a7d048c838d82e054f46434f978048c838d82e0a3ac83ad82b9000a8a838b82f0a3aa83ab82d8e7b900d8ded6906be1eaf0a3ebf0906be0745af090700bd0e0f090700ad0e0f0907009d0e0f0907008d0e0f0d0a822"]],"cresfw_sha256":"a6134cc0c2146f3c68661f0febfa3dc3a8fd9bde83050230b802d52d4410df64"}</script>
+<script id="upoke-data" type="text/plain">UEswMQFr7AECcgQIAnIFAAJyCIcCcgkFAi0jAAItJAgCLScFAi0ohwJW5gkCd7IIAnezCAh3sggId7MIAAAAAA==</script>
+<script>
+const patch = JSON.parse(document.getElementById('patch').textContent);
+const statusEl = document.getElementById('status');
+const saveBtn = document.getElementById('save');
+let output = null;
+
+function say(msg, cls) { statusEl.textContent = msg; statusEl.className = 'status ' + (cls || ''); }
+
+function hex(bytes, off, n) {
+  let s = '';
+  for (let i = 0; i < n; i++) s += bytes[off + i].toString(16).padStart(2, '0');
+  return s;
+}
+
+function build(buf) {
+  let img = new Uint8Array(buf);
+  // 2 MB flash dump (64-byte header + pages) -> RAM image layout; CRESFW.BIN is already in RAM layout
+  if (img.length === 0x200000 && img[0] === 0x44 && img[1] === 0xc0 && img[2] === 0x70 && img[3] === 0x03) {
+    const ram = new Uint8Array(0x200000);
+    ram.set(img.subarray(0x40, 0x8040), 0);
+    ram.set(img.subarray(0x8000), 0x8000);
+    img = ram;
+  } else if (img.length === patch.cresfw_size) {
+    const ram = new Uint8Array(patch.ram_size).fill(0xff);   // CRESFW.BIN stops early; the rest is unused fill
+    ram.set(img, 0);
+    img = ram;
+  } else {
+    throw new Error('This file has the wrong size (' + img.length + ' bytes). Expected the ProDVR CRESFW.BIN (' +
+                    patch.cresfw_size + ' bytes) or a 2 MB flash dump.');
+  }
+  for (const [off, oldHex, newHex] of patch.patches) {
+    if (hex(img, off, oldHex.length / 2) !== oldHex)
+      throw new Error('This firmware differs from the supported version (at 0x' + off.toString(16) +
+                      '). Nothing was made, to keep your DVR safe.');
+    for (let i = 0; i < newHex.length / 2; i++) img[off + i] = parseInt(newHex.substr(2 * i, 2), 16);
+  }
+  return img;
+}
+
+function handle(file) {
+  output = null; saveBtn.disabled = true;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      output = build(r.result);
+      say('OK: ' + file.name + ' matched the supported firmware. ADJUST.BIN is ready.', 'ok');
+      saveBtn.disabled = false;
+    } catch (e) { say(e.message, 'err'); }
+  };
+  r.onerror = () => say('Could not read the file.', 'err');
+  r.readAsArrayBuffer(file);
+}
+
+function download(bytes, name) {
+  const url = URL.createObjectURL(new Blob([bytes], { type: 'application/octet-stream' }));
+  const a = document.createElement('a'); a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+const drop = document.getElementById('drop');
+document.getElementById('file').addEventListener('change', e => e.target.files[0] && handle(e.target.files[0]));
+['dragenter', 'dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave', 'drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => e.dataTransfer.files[0] && handle(e.dataTransfer.files[0]));
+saveBtn.addEventListener('click', () => output && download(output, 'ADJUST.BIN'));
+document.getElementById('upoke').addEventListener('click', () => {
+  const b64 = document.getElementById('upoke-data').textContent.trim();
+  download(Uint8Array.from(atob(b64), c => c.charCodeAt(0)), 'UPOKE.BIN');
+});
+</script>
+</body>
+</html>

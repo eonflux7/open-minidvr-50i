@@ -1,0 +1,14 @@
+# Tearing threshold test: D1 rate-control target 24 KB/frame (normal 50 KB, reaches ~30 KB; 14 KB showed no band),
+# plus the interrupt log (same columns as peek_irq.txt).
+rec write 571A 00006000     # lower target 24576 bytes/frame
+rec write 571E 00007800     # upper target = 10/8 of that
+# Decode: tools/plog.py PICTxxxx.AVI pokes/peek_irq.txt
+field peek 5229 4   tick       # system tick (INT0 bit0)
+field peek 2468 4   pending    # INT0 pending bits as seen by the dispatcher
+field peek 720D 1   st720D     # capture status
+field peek 1EE1 1   frames     # frame counter bumped by B222
+field peek 5656 2   b222st     # B222 mode / skip
+field peek 5535 1   slot
+field peek 54DB 2   ring       # ring write index, count
+field peek 72DD 3   capdst     # capture destination registers
+field peek 7284 4   cap7284

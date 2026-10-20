@@ -1,0 +1,4 @@
+# Hook self-test: lower the D1 rate-control target at record start, so frames become much smaller.
+# Normal D1 target = 704*288/4 = 50688 (0x0000C600) bytes/frame, upper bound = target*10/8.
+rec write 571A 00002000     # lower target 8192 bytes/frame
+rec write 571E 00002800     # upper target 10240 bytes/frame

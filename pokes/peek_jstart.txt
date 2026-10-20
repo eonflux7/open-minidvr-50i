@@ -1,0 +1,14 @@
+# Read-back log v5: order of capture done (ev2), JPEG start (ev5), JPEG done (ev4), rejected field (ev6).
+# Events: 1 = TV-out vsync  2 = capture done (kept field)  4 = JPEG done  5 = JPEG start  6 = capture done, field rejected
+boot write 6BEB 00           # JPEG start delay (x256 loops), 0 = stock
+boot write 6BEC 00           # field gate: 0 = stock
+boot write 6BED 74           # log events 2, 4, 5, 6 (not the TV-out vsync)
+field peek 5229 4   tick
+field peek 720D 1   st720D     # capture status (bit0 = field)
+field peek 1EE1 1   frames
+field peek 5674 2   bufidx     # capture buffer index (5674), last finished (5675)
+field peek 1EDC 3   1EDC       # 1EDC, 1EDD (buffer 9F69 compresses), 1EDE
+field peek 2470 3   sched      # JPEG scheduler state 2470-2472
+field peek 1EE0 1   1EE0
+field peek 1EE4 1   1EE4
+field peek 1EE8 1   1EE8

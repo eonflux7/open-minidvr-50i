@@ -1,0 +1,20 @@
+# A/B: recording 1 = edge fix ON (rows 0 and 287 of both capture buffers replaced before each JPEG start),
+# recording 2 = OFF, 3 = ON, ... All: 50i, JPEG start waits for end of field, centred capture.
+boot write 6BEC 01           # field gate: both fields (50i)
+boot write 6BEE FF           # JPEG start: wait for end of field
+rec write 7204 08            # capture H start 8 B (pixel 4), H end 0x587
+rec write 7205 00
+rec write 7208 87
+rec write 7209 05
+rec write 2D23 0008
+rec write 2D27 0587
+rec write 56E6 01            # rate control level at record start: finest (1)
+boot write 6BFB 00
+rec xor 6BFB 03              # edge fix: 03 (top + bottom) on odd recordings, 00 on even ones
+boot write 6BED 2C           # log events 2 (capture done), 3 (start path AC40), 5 (start path AB1E)
+field peek 720D 1   st720D
+field peek 56E6 1   qlevel
+field peek 6BFB 1   edgefix
+field peek 16FC 4   buf0       # capture buffer table entry 0 (address)
+field peek 1710 4   buf1       # entry 1
+field peek 7284 4   cap7284    # capture write address now

@@ -1,0 +1,27 @@
+# Vendor firmware, flash dumps and anything built from them: never publish
+dumps/
+patches/
+ext/
+fw/
+*.BIN
+!docs/UPOKE.BIN
+*.bin
+ADJUST.BIN
+
+# Recordings and recovery images
+samples/
+recovery/
+
+# Ghidra install, project and decompiler output (vendor code)
+tools/ghidra/
+ghidra/*
+!ghidra/scripts/
+ghidra_install.log
+
+# Build products
+hook/*.rel
+hook/*.sym
+pokes/*.bin
+pico_serprog.uf2
+__pycache__/
+*.pyc

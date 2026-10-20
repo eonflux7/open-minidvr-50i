@@ -1,0 +1,349 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051)               Page 1
+Hexadecimal [24-Bits]
+
+
+
+                                      1 ; SD-card poke hook, record-start part. Lives in bank13 free space (zero padding from E742).
+                                      2 ; Entered from bank13:C203 (was MOV R7,#1 / RET at the end of the per-recording start routine, after the AVI header
+                                      3 ; has been built in big memory 0x7D0000 by bank11:8000).
+                                      4 ; Applies UPOKE.BIN entries flagged "record start" (bit1) from the XDATA 0x6A00 buffer filled at boot, then arms the
+                                      5 ; per-field read-back logger (peek_b07.asm) if the file has "peek" entries (flags & F4 == 34).
+                                      6 ;
+                                      7 ; Log layout in the AVI header JUNK chunk (file offset 0x14A, body 0x152..0x7FF3; window XDATA 0x8000 = file offset 0):
+                                      8 ;   0x160: "PLG2", record length, number of peek entries, 16 bytes = logger state 6BE0-6BEF left by the previous
+                                      9 ;          recording (armed flag, ptr, reclen, seq, event counters), then a copy of each peek entry (flags, hi, lo, count)
+                                     10 ;   then records (see peek_b07.asm) until the chunk is full (stop at XDATA 0xFFF0).
+                                     11 
+                                     12         .area   CODE (ABS)
+      00E800                         13         .org    0xE800
+                                     14 
+      00E800 7F 02            [12]   15 rec:    mov     r7,#0x02
+      00E802 12 E8 24         [24]   16         lcall   apply
+      00E805 12 E8 80         [24]   17         lcall   loginit
+      00E808 7F 01            [12]   18         mov     r7,#0x01            ; the instructions we replaced
+      00E80A 22               [24]   19         ret
+                                     20 
+                                     21 ; magic: A = 0 if the buffer holds "PK01"
+      00E80B 90 6A 00         [24]   22 magic:  mov     dptr,#0x6A00
+      00E80E E0               [24]   23         movx    a,@dptr
+      00E80F 64 50            [12]   24         xrl     a,#0x50             ; 'P'
+      00E811 70 10            [24]   25         jnz     mret
+      00E813 A3               [24]   26         inc     dptr
+      00E814 E0               [24]   27         movx    a,@dptr
+      00E815 64 4B            [12]   28         xrl     a,#0x4B             ; 'K'
+      00E817 70 0A            [24]   29         jnz     mret
+      00E819 A3               [24]   30         inc     dptr
+      00E81A E0               [24]   31         movx    a,@dptr
+      00E81B 64 30            [12]   32         xrl     a,#0x30             ; '0'
+      00E81D 70 04            [24]   33         jnz     mret
+      00E81F A3               [24]   34         inc     dptr
+      00E820 E0               [24]   35         movx    a,@dptr
+      00E821 64 31            [12]   36         xrl     a,#0x31             ; '1'
+      00E823 22               [24]   37 mret:   ret
+                                     38 
+                                     39 ; apply(R7 = flag mask): walk entries at 0x6A04..0x6BBF; ops 0 write, 1 OR, 2 AND, 5 XOR (3 peek / 4 hdr skipped)
+      00E824 12 E8 0B         [24]   40 apply:  lcall   magic
+      00E827 70 55            [24]   41         jnz     aret
+      00E829 7A 6A            [12]   42         mov     r2,#0x6A
+      00E82B 7B 04            [12]   43         mov     r3,#0x04
+      00E82D EA               [12]   44 aloop:  mov     a,r2                ; stop at 0x6BC0
+      00E82E 64 6B            [12]   45         xrl     a,#0x6B
+      00E830 70 06            [24]   46         jnz     aok
+      00E832 EB               [12]   47         mov     a,r3
+      00E833 C3               [12]   48         clr     c
+      00E834 94 C0            [12]   49         subb    a,#0xC0
+      00E836 50 46            [24]   50         jnc     aret
+      00E838 8A 83            [24]   51 aok:    mov     0x83,r2
+      00E83A 8B 82            [24]   52         mov     0x82,r3
+      00E83C E0               [24]   53         movx    a,@dptr
+      00E83D 60 3F            [24]   54         jz      aret
+      00E83F FC               [12]   55         mov     r4,a                ; flags
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051)               Page 2
+Hexadecimal [24-Bits]
+
+
+
+      00E840 A3               [24]   56         inc     dptr
+      00E841 E0               [24]   57         movx    a,@dptr
+      00E842 FD               [12]   58         mov     r5,a                ; addr hi
+      00E843 A3               [24]   59         inc     dptr
+      00E844 E0               [24]   60         movx    a,@dptr
+      00E845 FE               [12]   61         mov     r6,a                ; addr lo
+      00E846 A3               [24]   62         inc     dptr
+      00E847 E0               [24]   63         movx    a,@dptr
+      00E848 F8               [12]   64         mov     r0,a                ; value
+      00E849 EB               [12]   65         mov     a,r3
+      00E84A 24 04            [12]   66         add     a,#4
+      00E84C FB               [12]   67         mov     r3,a
+      00E84D EA               [12]   68         mov     a,r2
+      00E84E 34 00            [12]   69         addc    a,#0
+      00E850 FA               [12]   70         mov     r2,a
+      00E851 EC               [12]   71         mov     a,r4
+      00E852 5F               [12]   72         anl     a,r7
+      00E853 60 D8            [24]   73         jz      aloop
+      00E855 8D 83            [24]   74         mov     0x83,r5
+      00E857 8E 82            [24]   75         mov     0x82,r6
+      00E859 EC               [12]   76         mov     a,r4
+      00E85A C4               [12]   77         swap    a
+      00E85B 54 0F            [12]   78         anl     a,#0x0F
+      00E85D 60 0C            [24]   79         jz      awr
+      00E85F 14               [12]   80         dec     a
+      00E860 60 0D            [24]   81         jz      aor
+      00E862 14               [12]   82         dec     a
+      00E863 60 0F            [24]   83         jz      aand
+      00E865 24 FD            [12]   84         add     a,#0xFD             ; A = op - 2: op 5 = XOR
+      00E867 60 10            [24]   85         jz      axor
+      00E869 80 C2            [24]   86         sjmp    aloop
+      00E86B E8               [12]   87 awr:    mov     a,r0
+      00E86C F0               [24]   88         movx    @dptr,a
+      00E86D 80 BE            [24]   89         sjmp    aloop
+      00E86F E0               [24]   90 aor:    movx    a,@dptr
+      00E870 48               [12]   91         orl     a,r0
+      00E871 F0               [24]   92         movx    @dptr,a
+      00E872 80 B9            [24]   93         sjmp    aloop
+      00E874 E0               [24]   94 aand:   movx    a,@dptr
+      00E875 58               [12]   95         anl     a,r0
+      00E876 F0               [24]   96         movx    @dptr,a
+      00E877 80 B4            [24]   97         sjmp    aloop
+      00E879 E0               [24]   98 axor:   movx    a,@dptr
+      00E87A 68               [12]   99         xrl     a,r0
+      00E87B F0               [24]  100         movx    @dptr,a
+      00E87C 80 AF            [24]  101         sjmp    aloop
+      00E87E 22               [24]  102 aret:   ret
+                                    103 
+      00E87F 22               [24]  104 ishort: ret
+                                    105 
+                                    106 ; loginit: disarm, apply header writes (op 4, flags & F2 == 42: byte at AVI header offset), then (if there are peek
+                                    107 ; entries) write the log header and arm the logger
+      00E880                        108 loginit:
+      00E880 78 E0            [12]  109         mov     r0,#0xE0            ; snapshot logger state 6BE0-6BEF -> 6BC0-6BCF (goes into the log header)
+      00E882 75 83 6B         [24]  110 lsnap:  mov     dph,#0x6B
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051)               Page 3
+Hexadecimal [24-Bits]
+
+
+
+      00E885 88 82            [24]  111         mov     dpl,r0
+      00E887 E0               [24]  112         movx    a,@dptr
+      00E888 F9               [12]  113         mov     r1,a
+      00E889 E8               [12]  114         mov     a,r0
+      00E88A 24 E0            [12]  115         add     a,#0xE0             ; -0x20
+      00E88C F5 82            [12]  116         mov     dpl,a
+      00E88E E9               [12]  117         mov     a,r1
+      00E88F F0               [24]  118         movx    @dptr,a
+      00E890 08               [12]  119         inc     r0
+      00E891 B8 F0 EE         [24]  120         cjne    r0,#0xF0,lsnap
+      00E894 90 6B E0         [24]  121         mov     dptr,#0x6BE0
+      00E897 E4               [12]  122         clr     a
+      00E898 F0               [24]  123         movx    @dptr,a             ; disarmed
+      00E899 12 E8 0B         [24]  124         lcall   magic
+      00E89C 70 E1            [24]  125         jnz     ishort
+      00E89E 7E 00            [12]  126         mov     r6,#0               ; peek entries
+      00E8A0 7F 06            [12]  127         mov     r7,#6               ; record length (fixed part)
+      00E8A2 90 6A 04         [24]  128         mov     dptr,#0x6A04
+      00E8A5 E5 83            [12]  129 iscan:  mov     a,0x83              ; stop at 0x6BC0
+      00E8A7 B4 6B 07         [24]  130         cjne    a,#0x6B,isok
+      00E8AA E5 82            [12]  131         mov     a,0x82
+      00E8AC B4 C0 00         [24]  132         cjne    a,#0xC0,ischk
+      00E8AF 50 19            [24]  133 ischk:  jnc     isend
+      00E8B1 E0               [24]  134 isok:   movx    a,@dptr
+      00E8B2 60 16            [24]  135         jz      isend
+      00E8B4 FD               [12]  136         mov     r5,a                ; flags
+      00E8B5 A3               [24]  137         inc     dptr
+      00E8B6 A3               [24]  138         inc     dptr
+      00E8B7 A3               [24]  139         inc     dptr
+      00E8B8 E0               [24]  140         movx    a,@dptr             ; count
+      00E8B9 A3               [24]  141         inc     dptr
+      00E8BA CD               [12]  142         xch     a,r5
+      00E8BB 54 F4            [12]  143         anl     a,#0xF4
+      00E8BD B4 34 E5         [24]  144         cjne    a,#0x34,iscan
+      00E8C0 0E               [12]  145         inc     r6
+      00E8C1 EF               [12]  146         mov     a,r7
+      00E8C2 2D               [12]  147         add     a,r5
+      00E8C3 FF               [12]  148         mov     r7,a
+      00E8C4 50 DF            [24]  149         jnc     iscan
+      00E8C6 7E 00            [12]  150         mov     r6,#0               ; record longer than 255 bytes: no logging
+      00E8C8 80 00            [24]  151         sjmp    isend
+      00E8CA 90 6B E3         [24]  152 isend:  mov     dptr,#0x6BE3
+      00E8CD EF               [12]  153         mov     a,r7
+      00E8CE F0               [24]  154         movx    @dptr,a             ; record length
+      00E8CF A3               [24]  155         inc     dptr
+      00E8D0 E4               [12]  156         clr     a
+      00E8D1 F0               [24]  157         movx    @dptr,a             ; seq
+      00E8D2 C0 A8            [24]  158         push    0xA8                ; IE
+      00E8D4 C2 AF            [12]  159         clr     0xAF                ; EA off while we own the window
+      00E8D6 90 70 08         [24]  160         mov     dptr,#0x7008        ; save window pages (7008/09 = read page, 700A/0B = write page, cf. CODE:00A2)
+      00E8D9 E0               [24]  161         movx    a,@dptr
+      00E8DA C0 E0            [24]  162         push    0xE0
+      00E8DC A3               [24]  163         inc     dptr
+      00E8DD E0               [24]  164         movx    a,@dptr
+      00E8DE C0 E0            [24]  165         push    0xE0
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051)               Page 4
+Hexadecimal [24-Bits]
+
+
+
+      00E8E0 A3               [24]  166         inc     dptr
+      00E8E1 E0               [24]  167         movx    a,@dptr
+      00E8E2 C0 E0            [24]  168         push    0xE0
+      00E8E4 A3               [24]  169         inc     dptr
+      00E8E5 E0               [24]  170         movx    a,@dptr
+      00E8E6 C0 E0            [24]  171         push    0xE0
+      00E8E8 90 70 08         [24]  172         mov     dptr,#0x7008        ; read and write page 0x00FA -> big-memory 0x7D0000 (AVI header) at XDATA 0x8000
+      00E8EB 74 FA            [12]  173         mov     a,#0xFA
+      00E8ED F0               [24]  174         movx    @dptr,a
+      00E8EE A3               [24]  175         inc     dptr
+      00E8EF E4               [12]  176         clr     a
+      00E8F0 F0               [24]  177         movx    @dptr,a
+      00E8F1 A3               [24]  178         inc     dptr
+      00E8F2 74 FA            [12]  179         mov     a,#0xFA
+      00E8F4 F0               [24]  180         movx    @dptr,a
+      00E8F5 A3               [24]  181         inc     dptr
+      00E8F6 E4               [12]  182         clr     a
+      00E8F7 F0               [24]  183         movx    @dptr,a
+      00E8F8 90 81 4A         [24]  184         mov     dptr,#0x814A        ; header must have the JUNK chunk where we expect it
+      00E8FB E0               [24]  185         movx    a,@dptr
+      00E8FC B4 4A 11         [24]  186         cjne    a,#0x4A,ijunk        ; 'J'
+      00E8FF A3               [24]  187         inc     dptr
+      00E900 E0               [24]  188         movx    a,@dptr
+      00E901 B4 55 0C         [24]  189         cjne    a,#0x55,ijunk        ; 'U'
+      00E904 A3               [24]  190         inc     dptr
+      00E905 E0               [24]  191         movx    a,@dptr
+      00E906 B4 4E 07         [24]  192         cjne    a,#0x4E,ijunk        ; 'N'
+      00E909 A3               [24]  193         inc     dptr
+      00E90A E0               [24]  194         movx    a,@dptr
+      00E90B B4 4B 02         [24]  195         cjne    a,#0x4B,ijunk        ; 'K'
+      00E90E 80 03            [24]  196         sjmp    ijok
+      00E910 02 E9 C3         [24]  197 ijunk:  ljmp    iend
+      00E913 7C 6A            [12]  198 ijok:   mov     r4,#0x6A            ; header writes
+      00E915 7D 04            [12]  199         mov     r5,#0x04
+      00E917 EC               [12]  200 hwloop: mov     a,r4                ; stop at 0x6BC0
+      00E918 B4 6B 06         [24]  201         cjne    a,#0x6B,hwok
+      00E91B ED               [12]  202         mov     a,r5
+      00E91C B4 C0 00         [24]  203         cjne    a,#0xC0,hwchk
+      00E91F 50 27            [24]  204 hwchk:  jnc     hwend
+      00E921 8C 83            [24]  205 hwok:   mov     0x83,r4
+      00E923 8D 82            [24]  206         mov     0x82,r5
+      00E925 E0               [24]  207         movx    a,@dptr
+      00E926 60 20            [24]  208         jz      hwend
+      00E928 F9               [12]  209         mov     r1,a                ; flags
+      00E929 A3               [24]  210         inc     dptr
+      00E92A E0               [24]  211         movx    a,@dptr
+      00E92B FA               [12]  212         mov     r2,a                ; offset hi
+      00E92C A3               [24]  213         inc     dptr
+      00E92D E0               [24]  214         movx    a,@dptr
+      00E92E FB               [12]  215         mov     r3,a                ; offset lo
+      00E92F A3               [24]  216         inc     dptr
+      00E930 E0               [24]  217         movx    a,@dptr
+      00E931 F8               [12]  218         mov     r0,a                ; value
+      00E932 A3               [24]  219         inc     dptr
+      00E933 AC 83            [24]  220         mov     r4,0x83
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051)               Page 5
+Hexadecimal [24-Bits]
+
+
+
+      00E935 AD 82            [24]  221         mov     r5,0x82
+      00E937 E9               [12]  222         mov     a,r1
+      00E938 54 F2            [12]  223         anl     a,#0xF2
+      00E93A B4 42 DA         [24]  224         cjne    a,#0x42,hwloop
+      00E93D EA               [12]  225         mov     a,r2
+      00E93E 44 80            [12]  226         orl     a,#0x80             ; window address 0x8000 + offset
+      00E940 F5 83            [12]  227         mov     0x83,a
+      00E942 8B 82            [24]  228         mov     0x82,r3
+      00E944 E8               [12]  229         mov     a,r0
+      00E945 F0               [24]  230         movx    @dptr,a
+      00E946 80 CF            [24]  231         sjmp    hwloop
+      00E948 EE               [12]  232 hwend:  mov     a,r6                ; any peek entries?
+      00E949 70 03            [24]  233         jnz     ilog
+      00E94B 02 E9 C3         [24]  234         ljmp    iend
+      00E94E 90 81 60         [24]  235 ilog:   mov     dptr,#0x8160
+      00E951 74 50            [12]  236         mov     a,#0x50             ; "PLG2"
+      00E953 F0               [24]  237         movx    @dptr,a
+      00E954 A3               [24]  238         inc     dptr
+      00E955 74 4C            [12]  239         mov     a,#0x4C
+      00E957 F0               [24]  240         movx    @dptr,a
+      00E958 A3               [24]  241         inc     dptr
+      00E959 74 47            [12]  242         mov     a,#0x47
+      00E95B F0               [24]  243         movx    @dptr,a
+      00E95C A3               [24]  244         inc     dptr
+      00E95D 74 32            [12]  245         mov     a,#0x32
+      00E95F F0               [24]  246         movx    @dptr,a
+      00E960 A3               [24]  247         inc     dptr
+      00E961 EF               [12]  248         mov     a,r7
+      00E962 F0               [24]  249         movx    @dptr,a
+      00E963 A3               [24]  250         inc     dptr
+      00E964 EE               [12]  251         mov     a,r6
+      00E965 F0               [24]  252         movx    @dptr,a
+      00E966 A3               [24]  253         inc     dptr
+      00E967 AA 83            [24]  254         mov     r2,0x83             ; dst
+      00E969 AB 82            [24]  255         mov     r3,0x82
+      00E96B 7C 6B            [12]  256         mov     r4,#0x6B            ; previous logger state, snapshot taken at loginit entry
+      00E96D 7D C0            [12]  257         mov     r5,#0xC0
+      00E96F 78 10            [12]  258         mov     r0,#16
+      00E971 8C 83            [24]  259 hstate: mov     0x83,r4
+      00E973 8D 82            [24]  260         mov     0x82,r5
+      00E975 E0               [24]  261         movx    a,@dptr
+      00E976 A3               [24]  262         inc     dptr
+      00E977 AC 83            [24]  263         mov     r4,0x83
+      00E979 AD 82            [24]  264         mov     r5,0x82
+      00E97B 8A 83            [24]  265         mov     0x83,r2
+      00E97D 8B 82            [24]  266         mov     0x82,r3
+      00E97F F0               [24]  267         movx    @dptr,a
+      00E980 A3               [24]  268         inc     dptr
+      00E981 AA 83            [24]  269         mov     r2,0x83
+      00E983 AB 82            [24]  270         mov     r3,0x82
+      00E985 D8 EA            [24]  271         djnz    r0,hstate
+      00E987 7C 6A            [12]  272         mov     r4,#0x6A            ; src
+      00E989 7D 04            [12]  273         mov     r5,#0x04
+      00E98B 8C 83            [24]  274 hcopy:  mov     0x83,r4             ; copy the peek entries (r6 of them)
+      00E98D 8D 82            [24]  275         mov     0x82,r5
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051)               Page 6
+Hexadecimal [24-Bits]
+
+
+
+      00E98F E0               [24]  276         movx    a,@dptr
+      00E990 54 F4            [12]  277         anl     a,#0xF4
+      00E992 64 34            [12]  278         xrl     a,#0x34
+      00E994 F9               [12]  279         mov     r1,a                ; 0 = peek entry
+      00E995 78 04            [12]  280         mov     r0,#4
+      00E997 8C 83            [24]  281 hbyte:  mov     0x83,r4
+      00E999 8D 82            [24]  282         mov     0x82,r5
+      00E99B E0               [24]  283         movx    a,@dptr
+      00E99C A3               [24]  284         inc     dptr
+      00E99D AC 83            [24]  285         mov     r4,0x83
+      00E99F AD 82            [24]  286         mov     r5,0x82
+      00E9A1 B9 00 0A         [24]  287         cjne    r1,#0,hskip
+      00E9A4 8A 83            [24]  288         mov     0x83,r2
+      00E9A6 8B 82            [24]  289         mov     0x82,r3
+      00E9A8 F0               [24]  290         movx    @dptr,a
+      00E9A9 A3               [24]  291         inc     dptr
+      00E9AA AA 83            [24]  292         mov     r2,0x83
+      00E9AC AB 82            [24]  293         mov     r3,0x82
+      00E9AE D8 E7            [24]  294 hskip:  djnz    r0,hbyte
+      00E9B0 B9 00 D8         [24]  295         cjne    r1,#0,hcopy
+      00E9B3 DE D6            [24]  296         djnz    r6,hcopy
+      00E9B5 90 6B E1         [24]  297         mov     dptr,#0x6BE1        ; write ptr = after the header
+      00E9B8 EA               [12]  298         mov     a,r2
+      00E9B9 F0               [24]  299         movx    @dptr,a
+      00E9BA A3               [24]  300         inc     dptr
+      00E9BB EB               [12]  301         mov     a,r3
+      00E9BC F0               [24]  302         movx    @dptr,a
+      00E9BD 90 6B E0         [24]  303         mov     dptr,#0x6BE0
+      00E9C0 74 5A            [12]  304         mov     a,#0x5A
+      00E9C2 F0               [24]  305         movx    @dptr,a             ; armed
+      00E9C3 90 70 0B         [24]  306 iend:   mov     dptr,#0x700B        ; restore window pages
+      00E9C6 D0 E0            [24]  307         pop     0xE0
+      00E9C8 F0               [24]  308         movx    @dptr,a
+      00E9C9 90 70 0A         [24]  309         mov     dptr,#0x700A
+      00E9CC D0 E0            [24]  310         pop     0xE0
+      00E9CE F0               [24]  311         movx    @dptr,a
+      00E9CF 90 70 09         [24]  312         mov     dptr,#0x7009
+      00E9D2 D0 E0            [24]  313         pop     0xE0
+      00E9D4 F0               [24]  314         movx    @dptr,a
+      00E9D5 90 70 08         [24]  315         mov     dptr,#0x7008
+      00E9D8 D0 E0            [24]  316         pop     0xE0
+      00E9DA F0               [24]  317         movx    @dptr,a
+      00E9DB D0 A8            [24]  318         pop     0xA8
+      00E9DD 22               [24]  319 iret:   ret

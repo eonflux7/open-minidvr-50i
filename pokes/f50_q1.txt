@@ -1,0 +1,15 @@
+# 50i + end-of-field JPEG start + centred capture + rate control starts at the FINEST level (no 4 s quality ramp).
+boot write 6BEC 01           # field gate: both fields (50i)
+boot write 6BEE FF           # JPEG start: wait for end of field
+rec write 7204 08            # capture H start 8 B (pixel 4) ...
+rec write 7205 00
+rec write 7208 87            # ... H end 0x587
+rec write 7209 05
+rec write 2D23 0008
+rec write 2D27 0587
+boot write 5372 01           # default rate-control level (copied to 56E6, bank05:AEDB): 1 = finest
+rec write 56E6 01            # current level at record start: finest
+boot write 6BED 04
+field peek 56E6 1   qlevel     # rate-control level (1 finest .. 9)
+field peek 5372 1   qdefault
+field peek 1F38 1   qapply

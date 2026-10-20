@@ -1,0 +1,20 @@
+# A/B: edge fix ON in all recordings; recording 1 = AC40 start path also waits for end of field (6BFC = FF),
+# recording 2 = no wait there (00), 3 = FF, ... All: 50i, AB1E path waits for end of field, centred capture,
+# rate control starts at level 9 (= FINEST; 1 is coarsest).
+boot write 6BEC 01           # field gate: both fields (50i)
+boot write 6BEE FF           # AB1E start path: wait for end of field
+rec write 7204 08            # capture H start 8 B (pixel 4), H end 0x587
+rec write 7205 00
+rec write 7208 87
+rec write 7209 05
+rec write 2D23 0008
+rec write 2D27 0587
+rec write 56E6 09            # rate control level at record start: 9 = finest
+boot write 6BFB 03           # edge fix: top + bottom
+boot write 6BFC 00
+rec xor 6BFC FF              # AC40-path end-of-field wait: FF on odd recordings, 00 on even ones
+boot write 6BED 2C           # log events 2, 3, 5
+field peek 720D 1   st720D
+field peek 56E6 1   qlevel
+field peek 6BFC 1   ac40wait
+field peek 7284 4   cap7284
