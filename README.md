@@ -1,4 +1,11 @@
-# minidvr: better video and audio for a cheap FPV mini DVR
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/banner-dark.png">
+    <img alt="open-minidvr-50i" src="docs/banner-light.png" width="100%">
+  </picture>
+</p>
+
+**Better video and audio for a cheap FPV mini DVR.**
 
 Custom firmware patches for the small FPV "mini DVR" sold as the **Eachine ProDVR** (and clones built on the same
 board). It was reverse-engineered to record a Sony VX2100E (PAL) as well as this hardware allows.
@@ -106,6 +113,7 @@ the raw lab notebook [docs/lab-notes.md](docs/lab-notes.md).
 | `docs/index.html` | browser patcher (the patch and UPOKE.BIN are embedded) |
 | `docs/patch.json`, `docs/UPOKE.BIN` | release patch (byte runs with their original bytes) and the settings preset |
 | `tools/weave.py`, `tools/convert.bat` | field-to-576i converter |
+| `tools/banner.py`, `docs/banner-*.png` | README banner (dark and light versions) |
 | `tools/mkpatch.py` | all byte patches (named sets), verified against the original bytes |
 | `tools/mkrelease.py` | builds `docs/patch.json` from a stock dump and the release build; also applies it from the shell |
 | `tools/mkram.py` | flash image to ADJUST.BIN (RAM-boot image) |
