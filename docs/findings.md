@@ -14,7 +14,7 @@ notebook is [lab-notes.md](lab-notes.md).
 | SPI flash | Zbit ZB25VQ16C (`25VQ16CSJG`) | 2 MB. Firmware plus a menu-settings sector at 0x1DF000 (`KTNS`). |
 | Audio front end | SGMicro SGM324 quad op-amp | Feeds the SoC's 12-bit ADC. Low-pass characteristic about 8–10 kHz. |
 | USB-C | 6-pin | **Power only** (no D+/D−). There's no USB route into the firmware. |
-| Jacks | 2 × 3.5 mm TRRS | AV in and AV out. |
+| Jacks | 2 × 3.5 mm TRRS | AV in and AV out. CTIA AV pinout (video on the sleeve, ground on ring 2); OMTP-wired cables give no picture. Pictures: [pinouts](av-pinouts-light.png), [re-soldering to CTIA](av-rewire-light.png). |
 
 There are no labelled debug pads. The firmware sets up a UART (bank11:B939; putchar CODE:57E2, 185 debug strings),
 but its TX pin wasn't found by probing.

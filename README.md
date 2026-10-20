@@ -35,30 +35,55 @@ switch off and start without the file, you're back to the stock firmware. Nothin
 
    The page runs entirely in your browser. It checks every byte it changes and refuses any other firmware version.
 2. **Copy both files to the root of the microSD card** (not into a folder).
-3. **Switch the DVR on and record in D1 mode.** Startup takes a little longer while it loads the file.
+3. **Switch the DVR on and record in D1 mode.** Startup takes a little longer while it loads the file. No picture?
+   Check the cable's pinout: [Connecting the camera](#connecting-the-camera-av-cable).
 4. **Copy ADJUST.BIN again before every power-on.** The DVR deletes it when it loads it. UPOKE.BIN stays on the card.
-   Once you're happy with it, you can [make it permanent](#making-it-permanent-sd-card-no-programmer) with the SD card alone.
-5. **Convert the recordings on a PC** (next section). The raw files hold one field per frame and look squashed until
-   they're converted.
+5. **Convert the recordings on a computer** ([below](#converting-recordings)). The raw files hold one field per frame
+   and look squashed until they're converted.
+6. **Optional: make it permanent** with the SD card alone, so you no longer need ADJUST.BIN
+   ([below](#making-it-permanent-sd-card-no-programmer)).
 
 ### Converting recordings
 
-You need [Python 3](https://www.python.org/downloads/) (tick "Add to PATH" when installing),
-[ffmpeg](https://ffmpeg.org/download.html) on your PATH, and numpy:
+**Windows:** download `MiniDVR-Convert-windows.zip` from the
+[latest release](https://github.com/eonflux7/open-minidvr-50i/releases/latest) and unzip it. Drag one or more `.AVI`
+files onto `MiniDVR-Convert.exe`, or double-click it and choose the files. Nothing to install: Python and ffmpeg are
+included. The first time, Windows may say "Windows protected your PC" because the program isn't signed with a paid
+certificate: click **More info**, then **Run anyway**.
+
+**macOS and Linux:** download this project (the green **Code** button at the top of the GitHub page, then
+**Download ZIP**) and unzip it.
+- **macOS:** double-click `tools/convert.command` and choose the files. The first time, macOS may refuse to open it
+  because it was downloaded: right-click it, choose **Open**, then **Open** again. If Python, numpy or ffmpeg is
+  missing, it offers to install them with [Homebrew](https://brew.sh) (and Homebrew too, if needed).
+- **Linux:** run `sh tools/convert.sh` in a terminal and choose the files, or give their names:
+  `sh tools/convert.sh PICT0001.AVI PICT0002.AVI` (you can drag files into the terminal window instead of typing).
+  If something is missing, it offers to install it with your package manager (apt, dnf, pacman or zypper). On
+  Fedora and openSUSE, get ffmpeg from RPM Fusion or Packman: the distribution's own ffmpeg can't write H.264.
+
+There's also `tools/convert.bat` for Windows users who'd rather run the Python version: it offers to install Python,
+numpy and ffmpeg with winget.
+
+Each recording becomes two files next to it:
+
+| File | What it's for |
+|---|---|
+| `PICT0001_576i.mp4` | 720×576 interlaced (25i): TVs, DVD/Blu-ray authoring, video editors |
+| `PICT0001_576p50.mp4` | 720×576 at 50p: smooth on computers and phones, and for uploading |
+
+If something is wrong (a recording made without ADJUST.BIN, an unfinished copy, a missing program), it says so in plain
+words and carries on with the other files.
+
+With a terminal you can also choose the output yourself:
 
 ```
-pip install numpy
-```
-
-On Windows you can then drag an `.AVI` onto `tools/convert.bat`. Or run it yourself:
-
-```
-python tools/weave.py PICT0001.AVI PICT0001.mp4           # 720x576 interlaced (25i), for TVs and editing
-python tools/weave.py PICT0001.AVI PICT0001.mp4 --bob     # 720x576 at 50p, smooth on computers and phones
+python tools/weave.py PICT0001.AVI PICT0001.mp4           # 720x576 interlaced (25i) only
+python tools/weave.py PICT0001.AVI PICT0001.mp4 --bob     # 720x576 at 50p only
 python tools/weave.py PICT0001.AVI PICT0001.mov --prores  # ProRes 422 HQ + PCM audio, for editing
 ```
 
-NTSC recordings (704×240) are recognised automatically and come out as 720×480 at 29.97i, or 59.94p with `--bob`.
+NTSC recordings (704×240) are recognised automatically and come out as 720×480 at 29.97i (`_480i`), or 59.94p
+(`_480p60`, or `--bob`).
 
 The converter:
 - pairs each top field with the next bottom field into a full frame (PAL: it tells them apart by the widescreen
@@ -68,32 +93,7 @@ The converter:
 - removes the per-block audio click
 - corrects the frame rate that the firmware writes into the file header (details below)
 
-## Limitations (measured, not guessed)
-
-- **Mono only.** The AV jack is TRRS, but the board feeds a single audio stream to the chip, and the firmware has no
-  second input channel. Stereo would need board surgery plus an undocumented second ADC input. For stereo, record the
-  camera's audio separately and sync it in post; the DVR's own track makes a good sync reference.
-- **About 10 kHz audio bandwidth.** The roll-off sits at the same frequency whether the chip samples at 31 kHz or
-  49.6 kHz, so it's an analog filter on the board (op-amp front end) plus the noise floor of the 12-bit ADC. Higher
-  sample rates don't add real highs.
-- **Audio rate tops out at about 31 kHz.** The chip can sample at 49.6 kHz, but then the firmware's SD writer falls
-  behind after about 12 s and starts dropping video fields.
-- **Rates come in steps.** The sample rate is 496000 / (77B2 + 77B3), so the options are 31000 Hz, 33067 Hz, 49600 Hz
-  and so on. There's no exact 32 or 48 kHz. Players and editors handle 31 kHz fine.
-- **Long recordings can stutter for a while.** Two long test recordings, one at stock 8 kHz audio, both had about 30 s
-  of repeated fields around the 1:00–1:30 mark. The camera was moving and the cable may have been touched. The cause
-  isn't settled. It's not the audio rate and not the picture content.
-- **The raw AVI isn't directly watchable:** it holds 704×288 fields, and its header frame rate is wrong, because the
-  firmware computes the frame rate from the amount of audio at a fixed 8 kHz. Always run the converter.
-- **Only D1 mode was tested** with the 50i settings, and only with a PAL camera. VGA is stock, and HD records 1280×576.
-- **The picture is JPEG at about 35–45 KB per field (about 2 MB/s).** It's a strip encoder with no frame memory, so
-  true 576-line frames are impossible on this chip. That's why the project records fields.
-- **ADJUST.BIN is one-shot.** The vendor bootloader deletes it after loading. To make the patch permanent, use the
-  DVR's own SD updater (next section). Or, if you have a clip programmer, use `tools/flash.sh`.
-- **One firmware only:** Eachine ProDVR firmware 2015.05.26.01.IR (CRESFW.BIN of September 2016). Other versions are
-  refused.
-
-## Making it permanent (SD card, no programmer)
+### Making it permanent (SD card, no programmer)
 
 The DVR has its own firmware updater: at power-on it looks for `CRESFW.BIN` in the card root and writes it into its
 flash chip. That's how Eachine ships updates. Step 5 of the patcher page makes a patched `CRESFW.BIN`: exactly the
@@ -119,6 +119,69 @@ called at bank10:8A5A, before the hook) and none of the patches touch it, so it 
 
 From the shell: `python3 tools/mkrelease.py apply CRESFW.BIN /path/to/sdcard/CRESFW.BIN`. An output named CRESFW.BIN
 gets the update format.
+
+## Connecting the camera (AV cable)
+
+The DVR's AV jacks are 3.5 mm TRRS (four contacts) and use the **CTIA** AV pinout: video on the sleeve, ground on
+ring 2. Many generic 3.5 mm-to-RCA cables are wired differently, either **OMTP** (ground and video swapped) or the
+**camcorder AV** pinout that many camera cables use (video and right audio swapped). With the wrong cable everything
+looks plugged in, but there's no picture.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/av-pinouts-dark.png">
+    <img alt="TRRS pinouts. CTIA, what the Mini DVR takes: tip left audio, ring 1 right audio, ring 2 ground, sleeve video. OMTP: tip left, ring 1 right, ring 2 video, sleeve ground. Camcorder AV: tip left, ring 1 video, ring 2 ground, sleeve right." src="docs/av-pinouts-light.png" width="100%">
+  </picture>
+</p>
+
+- **CTIA cable:** works as it is: yellow plug to the camera's video out, white and red to its audio.
+- **Camcorder AV cable:** ground is already in the right place, so swapping two plugs is enough. Put the camera's
+  video into the cable's **red** plug and the camera's right audio into the **yellow** plug (white stays on left).
+- **OMTP cable:** ground is on the wrong contact, and swapping RCA plugs can't fix that. Use a CTIA↔OMTP adapter
+  (sold for headsets; it swaps ring 2 and the sleeve), or re-solder the cable to CTIA (below).
+- **Not sure which one you have?** Set a multimeter to continuity and touch the 3.5 mm plug's sleeve (the metal part
+  next to the handle). Then find which RCA plug's centre pin beeps: yellow means CTIA, red means camcorder AV. If none
+  does and the sleeve beeps on the RCA shells instead, it's OMTP.
+
+**Re-soldering a cable to CTIA:** cut the cable anywhere along its length. On the plug side, find which wire goes to
+which contact with a multimeter. On the RCA side, find which wire goes to each plug's centre pin; the shields are the
+ground. The colours of the wires inside vary from cable to cable, so don't go by them. Then join the wires so that
+each contact gets the signal CTIA puts there, and insulate every joint (heat-shrink tubing is best):
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/av-rewire-dark.png">
+    <img alt="Re-soldering to CTIA. OMTP cable: join ring 2 to the shields and the sleeve to the yellow plug's wire; tip and ring 1 stay as they are. Camcorder AV cable: join ring 1 to the red plug's wire and the sleeve to the yellow plug's wire; tip and ring 2 stay as they are." src="docs/av-rewire-light.png" width="100%">
+  </picture>
+</p>
+
+The DVR records one audio channel (see [Limitations](#limitations-measured-not-guessed)). Which of left and right it
+takes hasn't been measured yet, so connect both if your camera has both.
+
+## Limitations (measured, not guessed)
+
+- **Mono only.** The AV jack is TRRS, but the board feeds a single audio stream to the chip, and the firmware has no
+  second input channel. Stereo would need board surgery plus an undocumented second ADC input. For stereo, record the
+  camera's audio separately and sync it in post; the DVR's own track makes a good sync reference.
+- **About 10 kHz audio bandwidth.** The roll-off sits at the same frequency whether the chip samples at 31 kHz or
+  49.6 kHz, so it's an analog filter on the board (op-amp front end) plus the noise floor of the 12-bit ADC. Higher
+  sample rates don't add real highs.
+- **Audio rate tops out at about 31 kHz.** The chip can sample at 49.6 kHz, but then the firmware's SD writer falls
+  behind after about 12 s and starts dropping video fields.
+- **Rates come in steps.** The sample rate is 496000 / (77B2 + 77B3), so the options are 31000 Hz, 33067 Hz, 49600 Hz
+  and so on. There's no exact 32 or 48 kHz. Players and editors handle 31 kHz fine.
+- **Long recordings can stutter for a while.** Two long test recordings, one at stock 8 kHz audio, both had about 30 s
+  of repeated fields around the 1:00–1:30 mark. The camera was moving and the cable may have been touched. The cause
+  isn't settled. It's not the audio rate and not the picture content.
+- **The raw AVI isn't directly watchable:** it holds 704×288 fields, and its header frame rate is wrong, because the
+  firmware computes the frame rate from the amount of audio at a fixed 8 kHz. Always run the converter.
+- **Only D1 mode was tested** with the 50i settings, and only with a PAL camera. VGA is stock, and HD records 1280×576.
+- **The picture is JPEG at about 35–45 KB per field (about 2 MB/s).** It's a strip encoder with no frame memory, so
+  true 576-line frames are impossible on this chip. That's why the project records fields.
+- **ADJUST.BIN is one-shot.** The vendor bootloader deletes it after loading. To make the patch permanent, use the
+  DVR's own SD updater ([Making it permanent](#making-it-permanent-sd-card-no-programmer)). Or, if you have a clip programmer, use `tools/flash.sh`.
+- **One firmware only:** Eachine ProDVR firmware 2015.05.26.01.IR (CRESFW.BIN of September 2016). Other versions are
+  refused.
 
 ## NTSC (experimental)
 
@@ -172,7 +235,10 @@ the raw lab notebook [docs/lab-notes.md](docs/lab-notes.md).
 |---|---|
 | `docs/index.html` | browser patcher (the patch and UPOKE.BIN are embedded) |
 | `docs/patch.json`, `docs/UPOKE.BIN` | release patch (byte runs with their original bytes, plus the extra `ntsc` runs) and the settings preset |
-| `tools/weave.py`, `tools/convert.bat` | field-to-576i (PAL) / 480i (NTSC) converter |
+| `tools/weave.py` | field-to-576i (PAL) / 480i (NTSC) converter |
+| `tools/convert.bat`, `tools/convert.command`, `tools/convert.sh` | converter launchers for Windows, macOS and Linux (they offer to install what's missing) |
+| `.github/workflows/windows-converter.yml`, `tools/windows-readme.txt` | builds the standalone Windows converter (PyInstaller + ffmpeg essentials) for each `v*` release |
+| `tools/pinouts.py`, `docs/av-*.png` | AV cable pictures: TRRS pinouts (CTIA, OMTP, camcorder AV) and re-soldering to CTIA |
 | `tools/banner.py`, `docs/banner-*.png` | README banner (dark and light versions) |
 | `tools/mkpatch.py` | all byte patches (named sets), verified against the original bytes |
 | `tools/mkrelease.py` | builds `docs/patch.json` from a stock dump and the release build; also applies it from the shell |
