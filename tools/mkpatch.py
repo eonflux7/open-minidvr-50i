@@ -237,6 +237,18 @@ def audio_clk(div):
 PATCHES["release_31k"] = audio_hdr(31000)
 PATCHES["release_31k_clk"] = audio_hdr(31000) + audio_clk(0x08)  # untested on hardware
 
+# NTSC variant of the release (apply on top of it): D1 = 704x240. The capture setup (bank06:8064) already picks a 240-line
+# window when TVP5150 reg 8C reports a non-PAL standard, but the release fixes D1 at 288 rows, so the JPEG scaler (ratio
+# from capture/output height, bank10:AF73) would stretch each NTSC field to 288. The D1 branch of the mode table gets too
+# long for its 23 bytes (865B hard-codes 01 as the high byte of [5358]), so it calls bank05:DA00 (zero fill D9F5-FFFF).
+# NTSC-only: a PAL camera on this build gets its 288-line fields squeezed to 240. Emulator-tested only (tests/test_ntsc.py).
+PATCHES["ntsc_d1"] = [
+    (0x295E5, "9053567402f074c012865b74",
+              "12da00" "123b1a" "00006800" "800b"),  # bank05:95e5  LCALL DA00, [536E] = 6800 (as before), SJMP 95FC
+    (0x2DA00, "00" * 19, "905356" "7402f0a3" "74c0f0a3" "e4f0a3" "74f0" "028736"),
+                                                     # bank05:da00  [5356] = 02C0 (704), [5358] = 00F0 (240), LJMP 8736
+]
+
 def main(src, dst, name):
     img = bytearray(open(src, "rb").read())
     for off, old, new in PATCHES[name]:

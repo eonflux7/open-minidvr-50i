@@ -37,7 +37,17 @@ The firmware is the **Eachine ProDVR / HMDVR** firmware, version 2015.05.26.01.I
   `CRESFW.BIN`. `tools/mkram.py` makes it. The copy loop CODE:0080–00ED must stay unchanged, because it runs while page
   0 is being overwritten.
 - There's no checksum on images. Patched flash images boot fine.
-- The SD updater also knows `CRESFW.BIN` (permanent update) and `UPDATE.TXT`. That path wasn't reversed and isn't used.
+- **SD updater (permanent install):** when there's no ADJUST.BIN, bank10:A1A1 looks for **`CRESFW.BIN`**. It loads
+  the file to 0x300000 with the same loader (and deletes it), then calls bank03:A0CC and bank16:CCA7. CCA7 copies the
+  64 bytes at 0x2FFFC0 (the flash header, just below the file) to 3F52, then bank08:D5FD (stub 1A7A) erases, writes
+  and verifies flash 0–0x1FF000 from 0x2FFFC0. On success A1A1 ends in an endless loop (switch off); on failure it
+  shows an error and boots on. There's no checksum, magic or version check on the way, so a patched CRESFW.BIN of the
+  vendor size goes through like the vendor's. Flash beyond the file comes from whatever is in big memory there; the
+  vendor's own update has the same property. The whole path runs before the poke hook (8A5A → A1A1, hook later at
+  8A7E), and no patch touches bank10:A1A1–A2E3, bank16:CCA7, bank08:D5FD or bank03:A0CC. The loader's delete hook
+  (bank04:81E4 → DA00) keeps only UPOKE.BIN, so CRESFW.BIN is deleted as in stock. So the original CRESFW.BIN
+  restores stock from the patched firmware. User reports (IntoFPV, 2016): the red LED blinks while writing; the file
+  sometimes stays on the card and has to be deleted. Not yet run with a patched file.
 
 ## The poke hook (UPOKE.BIN)
 
@@ -85,6 +95,17 @@ This turned every experiment into "copy a 100-byte file to the card" instead of 
   neighbouring row of the same field.
 - **Dropped fields are hidden:** the DVR repeats the previous idx1 entry (same offset) for a field it couldn't encode.
   Count repeats, not frames per second.
+
+### NTSC (experimental, untested on hardware)
+- Capture setup bank06:8000 reads TVP5150 reg 8C: low nibble 3, 4 or 7 → [2D2D] = 288 lines, anything else → 240.
+  The JPEG scaler ratio comes from capture height / output height (bank10:AF73 → 1EAC/1EAE → descriptor 1E7C/1E7E),
+  so on the PAL build an NTSC field is stretched 240 → 288.
+- `ntsc_d1`: the D1 case of the mode table (bank05:95E5) calls new code at bank05:DA00 (zero fill D9F5–FFFF, no
+  references) that sets [5356]/[5358] = 704/240, then continues as before (8736, [536E] = 6800). Applied on top of the
+  release; `tests/test_ntsc.py` checks in the emulator that only [5358]/[5359] differ from the release.
+- `weave.py` finds NTSC field parity from the picture (half-line-shift comparison plus a Viterbi path). On PAL
+  recordings with the WSS rows cropped it agreed with WSS on 903/903 fields; on the two long clips it slipped only
+  inside the 65–73 s stutter.
 
 ### Tearing band (fixed)
 - A band of stale picture at the bottom while panning. Each capture buffer gets field N, and the JPEG encoder reads it
@@ -162,8 +183,9 @@ This turned every experiment into "copy a 100-byte file to the card" instead of 
   and in a stock 8 kHz control, and not elsewhere in the same recordings, even with heavier video. The camera was
   moving and the cable may have been touched, which caused similar drops before. Not settled.
 - Live view in D1 with the changed window.
-- A permanent install (flash) with all settings built in, so neither ADJUST.BIN nor UPOKE.BIN is needed. The flashing
-  path itself is proven (`tools/flash.sh`, pico-serprog), but the baked image hasn't been built and tested.
+- A permanent install with all settings built in, so UPOKE.BIN isn't needed either. The firmware itself can now go in
+  through the SD updater (patcher step 5) or `tools/flash.sh`, but a build with the UPOKE settings baked in hasn't been
+  made and tested. The SD-updater route itself hasn't been run with a patched file yet.
 
 ## Tools used
 

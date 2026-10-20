@@ -7,8 +7,17 @@ to the vendor's own CRESFW.BIN (or a 2 MB flash dump) and saves ADJUST.BIN; this
 
   mkrelease.py json  STOCK_DUMP.bin RELEASE.bin            -> docs/patch.json (maintainers)
   mkrelease.py apply CRESFW.BIN|DUMP.bin F:/ADJUST.BIN     -> ADJUST.BIN (users with Python)
+  mkrelease.py apply CRESFW.BIN|DUMP.bin F:/ADJUST.BIN --ntsc   NTSC camera variant (D1 = 704x240; untested on hardware)
+  mkrelease.py apply CRESFW.BIN|DUMP.bin F:/CRESFW.BIN     -> permanent install through the DVR's own SD updater
+
+An output named CRESFW.BIN is written in the vendor's update format (RAM layout, cut at the vendor file's size). At boot,
+bank10:A1A1 loads it (and deletes it) when there's no ADJUST.BIN, and bank16:CCA7 -> bank08:D5FD writes flash 0-0x1FF000.
+
+patch.json "ntsc" holds the extra runs of the NTSC variant (tools/mkpatch.py "ntsc_d1"), applied after "patches".
 """
 import hashlib, json, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import mkpatch
 
 RAM = 0x200000                 # ADJUST.BIN = 64 x 32 KB pages copied to the CPU's RAM (tools/mkram.py)
 CRESFW_SIZE = 1700506          # Eachine ProDVR CRESFW.BIN (Sep 2016), = RAM image truncated
@@ -42,7 +51,8 @@ def make_json(stock, release, cresfw=None):
     p = runs(a, b)
     assert max(o + len(n) // 2 for o, _, n in p) <= CRESFW_SIZE, 'patch reaches past the end of CRESFW.BIN'
     meta = {'name': 'minidvr release 1 (poke hook v6, 704x288 D1, 31 kHz audio header)', 'ram_size': RAM,
-            'cresfw_size': CRESFW_SIZE, 'patches': p}
+            'cresfw_size': CRESFW_SIZE, 'patches': p,
+            'ntsc': [[o, old, new] for o, old, new in mkpatch.PATCHES['ntsc_d1']]}  # banks 1+: RAM offset = flash offset
     if cresfw:
         meta['cresfw_sha256'] = hashlib.sha256(open(cresfw, 'rb').read()).hexdigest()
     json.dump(meta, open(JSON, 'w'), indent=0)
@@ -64,17 +74,19 @@ def embed(meta):
     print(f'{page}: patch + UPOKE.BIN embedded')
 
 
-def apply(src, dst):
+def apply(src, dst, ntsc=False):
     meta = json.load(open(JSON))
     ram = to_ram(open(src, 'rb').read())
     if len(ram) == meta['cresfw_size']:
         ram += b'\xff' * (meta['ram_size'] - len(ram))          # CRESFW.BIN stops early; the rest is unused fill
     if len(ram) != meta['ram_size']:
         sys.exit(f'{src}: unexpected size {len(ram)} - not a ProDVR CRESFW.BIN or 2 MB flash dump')
-    for off, old, new in meta['patches']:
+    for off, old, new in meta['patches'] + (meta['ntsc'] if ntsc else []):
         if ram[off:off + len(old) // 2].hex() != old:
             sys.exit(f'{src}: firmware differs at 0x{off:x} - different firmware version, NOT patching')
         ram[off:off + len(new) // 2] = bytes.fromhex(new)
+    if os.path.basename(dst).upper() == 'CRESFW.BIN':
+        ram = ram[:meta['cresfw_size']]                          # same size as the vendor's update file
     open(dst, 'wb').write(ram)
     print(f'{dst}: {len(ram)} bytes, sha256 {hashlib.sha256(ram).hexdigest()[:16]}...')
 
@@ -83,6 +95,6 @@ if __name__ == '__main__':
     if sys.argv[1] == 'json':
         make_json(*sys.argv[2:5])
     elif sys.argv[1] == 'apply':
-        apply(*sys.argv[2:4])
+        apply(*sys.argv[2:4], ntsc='--ntsc' in sys.argv[4:])
     else:
         sys.exit(__doc__)

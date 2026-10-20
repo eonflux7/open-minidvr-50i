@@ -16,6 +16,12 @@ board). It was reverse-engineered to record a Sony VX2100E (PAL) as well as this
 | Picture | off-centre, tearing band at the bottom when moving | centred capture window, finest JPEG quality from the start (no tearing band) |
 | Audio | 8 kHz mono, a click once per 32 KB block | **31 kHz** mono (real sound up to about 10 kHz), clicks removed by the converter |
 
+> [!WARNING]
+> **NTSC support is experimental and untested.** The patcher also offers an NTSC build for NTSC camcorders
+> (704×240 fields at about 60 per second, converted to 720×480 29.97i). It has only been checked in an emulator and
+> on simulated recordings, never on a real DVR with an NTSC camera. It may not work at all. It can't damage anything
+> (same RAM boot as the PAL build), and reports are welcome. Details: [NTSC (experimental)](#ntsc-experimental).
+
 **It doesn't touch your DVR's chip.** The patched firmware is loaded from the SD card into RAM at power-on. If you
 switch off and start without the file, you're back to the stock firmware. Nothing to brick.
 
@@ -23,6 +29,7 @@ switch off and start without the file, you're back to the stock firmware. Nothin
 
 1. **Make the files:** open the patcher page (<https://eonflux7.github.io/open-minidvr-50i/>, or `docs/index.html` offline) and follow the steps:
    - download Eachine's official ProDVR firmware (`CRESFW.BIN`)
+   - pick your camera's standard: PAL, or NTSC (experimental, see above)
    - drop it on the page
    - save **ADJUST.BIN** and **UPOKE.BIN**
 
@@ -30,6 +37,7 @@ switch off and start without the file, you're back to the stock firmware. Nothin
 2. **Copy both files to the root of the microSD card** (not into a folder).
 3. **Switch the DVR on and record in D1 mode.** Startup takes a little longer while it loads the file.
 4. **Copy ADJUST.BIN again before every power-on.** The DVR deletes it when it loads it. UPOKE.BIN stays on the card.
+   Once you're happy with it, you can [make it permanent](#making-it-permanent-sd-card-no-programmer) with the SD card alone.
 5. **Convert the recordings on a PC** (next section). The raw files hold one field per frame and look squashed until
    they're converted.
 
@@ -50,9 +58,11 @@ python tools/weave.py PICT0001.AVI PICT0001.mp4 --bob     # 720x576 at 50p, smoo
 python tools/weave.py PICT0001.AVI PICT0001.mov --prores  # ProRes 422 HQ + PCM audio, for editing
 ```
 
+NTSC recordings (704×240) are recognised automatically and come out as 720×480 at 29.97i, or 59.94p with `--bob`.
+
 The converter:
-- pairs each top field with the next bottom field into a full frame (it tells them apart by the PAL widescreen
-  signal line)
+- pairs each top field with the next bottom field into a full frame (PAL: it tells them apart by the widescreen
+  signal line; NTSC: from the picture itself, see below)
 - skips stray fields
 - hides the half-line and WSS rows at the edges
 - removes the per-block audio click
@@ -75,13 +85,62 @@ The converter:
   isn't settled. It's not the audio rate and not the picture content.
 - **The raw AVI isn't directly watchable:** it holds 704×288 fields, and its header frame rate is wrong, because the
   firmware computes the frame rate from the amount of audio at a fixed 8 kHz. Always run the converter.
-- **Only D1 mode was tested** with the 50i settings. VGA is stock, and HD records 1280×576.
+- **Only D1 mode was tested** with the 50i settings, and only with a PAL camera. VGA is stock, and HD records 1280×576.
 - **The picture is JPEG at about 35–45 KB per field (about 2 MB/s).** It's a strip encoder with no frame memory, so
   true 576-line frames are impossible on this chip. That's why the project records fields.
-- **ADJUST.BIN is one-shot.** The vendor bootloader deletes it after loading. Making the patch permanent means
-  flashing the SPI chip with a clip programmer (see `tools/flash.sh`). Only do that if you know what you're doing.
+- **ADJUST.BIN is one-shot.** The vendor bootloader deletes it after loading. To make the patch permanent, use the
+  DVR's own SD updater (next section). Or, if you have a clip programmer, use `tools/flash.sh`.
 - **One firmware only:** Eachine ProDVR firmware 2015.05.26.01.IR (CRESFW.BIN of September 2016). Other versions are
   refused.
+
+## Making it permanent (SD card, no programmer)
+
+The DVR has its own firmware updater: at power-on it looks for `CRESFW.BIN` in the card root and writes it into its
+flash chip. That's how Eachine ships updates. Step 5 of the patcher page makes a patched `CRESFW.BIN`: exactly the
+firmware you've been running as ADJUST.BIN, in the vendor's update format and at the same size. After the update the
+DVR starts with it every time, and you no longer need ADJUST.BIN. Keep UPOKE.BIN on the card, because the settings
+(50 fields/s, centring, quality, 31 kHz) still come from it.
+
+> [!CAUTION]
+> **This writes to the chip.** Try ADJUST.BIN first, with the same PAL/NTSC choice. If the power fails during the
+> write, the DVR won't start and needs a clip programmer to recover. The updater is the vendor's, but it hasn't yet
+> been run with this project's file. The NTSC build is untested even as ADJUST.BIN, so don't flash it until someone
+> has recorded with it.
+
+1. Charge the battery fully, or power the DVR over USB.
+2. Copy `CRESFW.BIN` to the card root. **Remove ADJUST.BIN**, because if it's there the DVR loads that instead.
+3. Switch on and leave the DVR alone while the red LED blinks. When it stops, wait about 30 s, then switch off.
+4. Delete `CRESFW.BIN` from the card if it's still there. Otherwise the DVR writes it again at every start.
+5. Record a short D1 clip with no ADJUST.BIN on the card. A raw file 704 pixels wide means it worked. Menu settings
+   may return to their defaults.
+
+**To undo:** do the same with Eachine's original `CRESFW.BIN`. The updater runs before any of this project's code (it's
+called at bank10:8A5A, before the hook) and none of the patches touch it, so it works the same from the patched firmware.
+
+From the shell: `python3 tools/mkrelease.py apply CRESFW.BIN /path/to/sdcard/CRESFW.BIN`. An output named CRESFW.BIN
+gets the update format.
+
+## NTSC (experimental)
+
+**Untested on hardware.** Nobody has recorded with the NTSC build yet. What's known comes from the disassembly, the
+emulator and simulated recordings.
+
+- **Why there's a separate build:** the firmware itself detects NTSC (TVP5150 register 0x8C) and captures a 240-line
+  field window. The PAL build fixes the D1 picture at 288 lines, so the JPEG scaler would stretch every NTSC field to
+  288. The NTSC build is the PAL build plus one change: D1 is 704×240 (`tools/mkpatch.py` `ntsc_d1`, 31 bytes, checked
+  in `tests/test_ntsc.py`).
+- **Use it only with an NTSC camera.** A PAL camera on the NTSC build gets its 288-line fields squeezed to 240.
+  The converter refuses NTSC recordings made with the PAL build and tells you to switch.
+- **Field parity:** NTSC has no WSS line, so `weave.py` works it out from the picture. It compares each field with
+  the previous one, shifted half a line up, half a line down and not at all, and picks the most likely top/bottom
+  sequence for the whole clip. Checked against WSS on PAL recordings with the WSS rows cut off, it matched every field
+  on clean clips (903 of 903). It can misjudge long stretches of repeated fields (like the stutter under Limitations)
+  and very flat scenes. `--parity picture` runs the same method on a PAL recording, for comparison.
+- **Unknowns:** whether the encoder keeps up at about 60 fields/s (the line rate is the same as PAL's, so it should),
+  what the top and bottom rows contain (VBI, closed captions, half lines: the converter leaves them as recorded), and
+  the HD mode (still 1280×576, stretched from 240 lines). The UPOKE.BIN settings don't depend on the standard.
+
+If you try it, please open an issue with a short raw `.AVI` and what you saw on the DVR.
 
 ## How it works (short version)
 
@@ -111,8 +170,8 @@ the raw lab notebook [docs/lab-notes.md](docs/lab-notes.md).
 | Path | What |
 |---|---|
 | `docs/index.html` | browser patcher (the patch and UPOKE.BIN are embedded) |
-| `docs/patch.json`, `docs/UPOKE.BIN` | release patch (byte runs with their original bytes) and the settings preset |
-| `tools/weave.py`, `tools/convert.bat` | field-to-576i converter |
+| `docs/patch.json`, `docs/UPOKE.BIN` | release patch (byte runs with their original bytes, plus the extra `ntsc` runs) and the settings preset |
+| `tools/weave.py`, `tools/convert.bat` | field-to-576i (PAL) / 480i (NTSC) converter |
 | `tools/banner.py`, `docs/banner-*.png` | README banner (dark and light versions) |
 | `tools/mkpatch.py` | all byte patches (named sets), verified against the original bytes |
 | `tools/mkrelease.py` | builds `docs/patch.json` from a stock dump and the release build; also applies it from the shell |
@@ -133,6 +192,8 @@ To make ADJUST.BIN without the browser:
 
 ```
 python3 tools/mkrelease.py apply CRESFW.BIN /path/to/sdcard/ADJUST.BIN   # or a 2 MB flash dump instead of CRESFW.BIN
+python3 tools/mkrelease.py apply CRESFW.BIN /path/to/sdcard/ADJUST.BIN --ntsc   # NTSC build (experimental, untested)
+python3 tools/mkrelease.py apply CRESFW.BIN /path/to/sdcard/CRESFW.BIN   # permanent install via the SD updater
 python3 tools/poke.py pokes/release_50i.txt /path/to/sdcard/UPOKE.BIN
 ```
 
