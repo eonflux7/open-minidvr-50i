@@ -25,7 +25,9 @@
 
 `tools/weave.py`:
 - pairs each top field with the next bottom field into a full frame (PAL: it tells them apart by the widescreen
-  signal line; NTSC: from the picture itself, see [NTSC](ntsc.md))
+  signal (WSS) line, which only the top field carries; it only checks that the line is there and doesn't read the
+  4:3/16:9 flag in it. NTSC: from the picture itself, see [NTSC](ntsc.md))
+- marks the video 4:3, or 16:9 with `--widescreen` (only for a camera set to 16:9)
 - skips stray fields
 - hides the half-line and WSS rows at the edges
 - removes the per-block audio click

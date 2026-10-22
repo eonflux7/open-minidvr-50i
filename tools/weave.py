@@ -23,6 +23,7 @@ writes at the start of every 32760-byte audio chunk (a click per chunk otherwise
   weave.py PICT0024.AVI out.mp4 --bob           576p50 (bwdif deinterlace, one frame per field)
   weave.py PICT0024.AVI out.mov --prores        576i25 ProRes 422 HQ + PCM audio, for editing
   weave.py PICT0024.AVI out.mp4 --w704          no side padding: 704x576, pixel aspect 12:11 (still 4:3)
+  weave.py PICT0024.AVI out.mp4 --widescreen    camera set to 16:9 (squeezed into the 4:3 signal): marked 16:9
   weave.py PICT0024.AVI out.mp4 --parity picture  PAL with the NTSC parity method (for testing it against WSS)
   weave.py PICT0024.AVI PICT0024_{fmt}.mp4      {fmt} becomes 576i, 576p50, 480i or 480p60
 """
@@ -144,7 +145,8 @@ def convert(src, dst, args):
     dst = dst.replace('{fmt}', f'{2 * h}p{round(fps)}' if args.bob else f'{2 * h}i')
     fs = w * h * 2                                        # yuv422p field
     W, H = (w if args.w704 else 720), 2 * h
-    sar = ('10/11' if args.w704 else '8/9') if ntsc else ('12/11' if args.w704 else '16/15')
+    # BT.601: the 704 active pixels are the 4:3 (or 16:9) picture, so the 8-px padding keeps the same pixel aspect
+    sar = ('40/33' if ntsc else '16/11') if args.widescreen else ('10/11' if ntsc else '12/11')
     x0 = (W - w) // 2
 
     def avi_audio(path, tmpdir):
@@ -281,7 +283,9 @@ def main():
     ap.add_argument('--bob', action='store_true', help='output 576p50 / 480p60 (motion-adaptive deinterlace, one frame per field)')
     ap.add_argument('--prores', action='store_true', help='ProRes 422 HQ instead of H.264')
     ap.add_argument('--crf', default='14')
-    ap.add_argument('--w704', action='store_true', help='output 704 wide (no 8-px side padding), SAR 12:11')
+    ap.add_argument('--w704', action='store_true', help='output 704 wide (no 8-px side padding)')
+    ap.add_argument('--widescreen', action='store_true',
+                    help='mark the video 16:9 (only for a camera set to 16:9; a 4:3 camera would look stretched)')
     ap.add_argument('--wss', type=float, default=20.0, help='row0/row1 difference above which a field counts as top')
     ap.add_argument('--parity', choices=['auto', 'wss', 'picture'], default='auto',
                     help='field parity from the PAL WSS line or from the picture (auto: WSS for 288-line fields, picture for 240)')
