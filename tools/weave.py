@@ -134,6 +134,9 @@ def convert(src, dst, args):
     if avg != 16000:                                                         # undo that for faster audio
         num *= avg; den *= 16000
     fps = num / den
+    if h not in (288, 240) or w > 720:                    # VGA 640x480 / HD 1280x576: each field stretched, can't weave
+        raise Failed(f'{w}x{h} frames - this was recorded in VGA or HD size. Only D1 records the fields as they are '
+                     f'(704x288, 704x240 for NTSC); set the DVR\'s size menu to D1 and record again.')
     if fps < 40:
         raise Failed(f'{fps:.2f} frames/s - this is not a both-fields recording (expected ~50, or ~60 for NTSC). '
                      f'Was ADJUST.BIN on the card, and was the DVR in D1 mode?')
