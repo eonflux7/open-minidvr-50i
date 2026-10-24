@@ -215,7 +215,8 @@ def convert(src, dst, args):
     if args.bob:
         vf, flags = f'setfield=tff,bwdif=mode=send_field:parity=tff,setsar={sar}', []
     else:
-        vf = f'setfield=tff,setsar={sar}'
+        # 4:2:0 chroma from each field on its own; ffmpeg's automatic conversion mixes the two fields' colour
+        vf = f'setfield=tff,setsar={sar}' + ('' if args.prores else ',scale=interl=1,format=yuv420p')
         flags = ['-field_order', 'tt'] + ([] if args.prores else ['-flags', '+ilme+ildct', '-x264opts', 'tff=1'])
     print(f'{os.path.basename(src)} -> {dst}')
     if not use_wss:
